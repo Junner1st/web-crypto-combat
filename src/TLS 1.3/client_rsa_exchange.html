@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雙向加解密測試</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+    <h2>雙向加解密測試 (WebSocket)</h2>
+
+    <label for="message">輸入要加密的訊息：</label>
+    <input type="text" id="message" placeholder="輸入訊息">
+    <button onclick="sendEncrypt()">加密並發送</button>
+
+    <h3>加密結果：</h3>
+    <p id="encrypted_text">尚未加密</p>
+
+    <h3>伺服器回應：</h3>
+    <p id="decrypted_text">尚未回應</p>
+
+    <script>
+        const socket = io("http://localhost:5000");
+        let publicKey, aesKey, aesIv;
+
+        // 請求 RSA 公鑰
+        socket.emit("request_rsa_public");
+
+        socket.on("rsa_public_key", (data) => {
+            publicKey = forge.pki.publicKeyFromPem(data.public_key);
+            console.log("📢 收到 RSA 公鑰:", publicKey);
+            exchangeAESKey();
+        });
+
+        function exchangeAESKey() {
+            aesKey = forge.random.getBytesSync(16);
+            aesIv = forge.random.getBytesSync(16);
+
+            let encryptedAESKey = publicKey.encrypt(aesKey, "RSA-OAEP");
+            let encryptedAESIv = publicKey.encrypt(aesIv, "RSA-OAEP");
+
+            socket.emit("send_encrypted_aes_key", {
+                aes_key: btoa(encryptedAESKey),
+                aes_iv: btoa(encryptedAESIv),
+            });
+        }
+
+        function sendEncrypt() {
+            const message = document.getElementById("message").value;
+            if (!message) {
+                alert("請輸入訊息！");
+                return;
+            }
+            let encrypted = CryptoJS.AES.encrypt(message, aesKey, { iv: aesIv }).toString();
+            socket.emit("encrypt_message", { message: encrypted });
+        }
+
+        socket.on("encrypted_response", (data) => {
+            document.getElementById("encrypted_text").innerText = data.encrypted;
+            socket.emit("decrypt_message", { encrypted: data.encrypted });
+        });
+
+        socket.on("decrypted_response", (data) => {
+            document.getElementById("decrypted_text").innerText = data.decrypted;
+        });
+
+        socket.on("aes_key_exchange_success", () => {
+            console.log("AES 金鑰交換成功！");
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.10.0/forge.min.js"></script>
+</body>
+</html>

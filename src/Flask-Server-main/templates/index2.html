@@ -1,0 +1,116 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <title>Simple Chat Room</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            
+            margin: 0 auto;
+            background-image: url('https://pbs.twimg.com/profile_banners/1469074755261464576/1646352254/1500x500');
+            background-size: 1000px 500px;
+        }
+        #text-list {
+            margin: 0 auto;
+            max-width: 600px;
+            list-style-type: none;
+            padding: 0;
+        }
+        .text-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+            margin: 0;
+        }
+        .user-image {
+            max-width: 200px;
+            height: auto;
+        }
+        #typed-text {
+            font-size: 36px;
+            font-weight: bold;
+            position: sticky;
+            left: calc((100vw - 600px) / 2);
+        } 
+        .typed-cursor {
+            font-size: 36px;
+            position: relative;
+            left: calc((100vw - 600px) / 2);
+        }
+        #middle {
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="white">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Junner the BigJam</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="http://140.134.53.57/~D1282854/D1282854_home.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Repository
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="https://www.geogebra.org/u/junnerx">Geogebra</a></li>
+                            <li><a class="dropdown-item" href="https://github.com/Junner1st">Github</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="https://hackmd.io/@JunnerX">HackMD</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://twitter.com/Junner_X_426">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="D1282854_99.html">multiplication table</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+      
+    <!-- typed.js -->
+    <span id="typed-text"></span>
+    <script>
+    var typed = new Typed('#typed-text', {
+        strings: ["Simple Chat Room", "TECH OTAKUS SAVE THE WORLD"],
+        typeSpeed: 40,
+        backSpeed: 20,
+        loop: true
+    });
+    </script>
+
+    <form method="post" id="middle">
+        <label for="text">Enter text:</label><br>
+        <input type="text" id="text" name="text"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <h2 id="middle">Text Content</h2>
+    <ul id="text-list">
+        {% for entry in text_entries %}
+            {% if entry.startswith('http') %}
+                <img class="user-image" src="{{ entry }}" alt="User provided image">
+            {% else %}
+                <li class="text-item">{{ entry }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    </div>
+</body>
+</html>

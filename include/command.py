@@ -1,0 +1,1 @@
+commands = ["\exit", "\q", "\help", "\sent"]
