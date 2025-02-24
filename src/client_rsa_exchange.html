@@ -59,10 +59,10 @@
             
             // aesKey = forge.random.getBytesSync(16); // 16, 24, 32 bytes for AES-128, AES-192, AES-256
             // aesIv = forge.random.getBytesSync(16);
-            aesKey = generateRandomString(16);
-            aesIv = generateRandomString(16);
-            // aesKey = '12GDS345678dhsth';
-            // aesIv = 'efF12GDS345A678d';
+            // aesKey = generateRandomString(16);
+            // aesIv = generateRandomString(16);
+            aesKey = '12GDS345678dhsth';
+            aesIv = 'efF12GDS345A678d';
 
 
             let encryptedAESKey = RSAPublicKey.encrypt(aesKey, "RSA-OAEP");

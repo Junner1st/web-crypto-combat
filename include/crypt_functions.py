@@ -3,15 +3,41 @@ import base64
 from Crypto.Util.Padding import pad, unpad
 from Crypto.Util.number import long_to_bytes, bytes_to_long, inverse
 
-class AESCipher:
-    from Crypto.Cipher import AES
-    
-    def __init__(self, key = None):
-        self.AES_KEY = self.aes_key_generator() if key is None else key
+from Crypto.Cipher import AES
+from Crypto.PublicKey import RSA
+from typing import Literal
 
-    def aes_key_generator(self, int: length=16):
+class AESCipher:
+    
+    def __init__(self, key: bytes = None, iv: bytes = None):
+
+        self.AES_KEY: bytes | None = key
+        self.AES_IV: bytes | None = iv
+        self.cipher: AES.new = None
+        # self.cipher = AES.new(self.AES_KEY, self.AES.MODE_CBC, self.AES_IV)
+        self.padding_mode: Literal["PKCS7", "zero"] = "PKCS7"
+        self.aes_mode: Literal["ECB", "CBC", "CFB", "OFB", "CTR", "OPENPGP", "CCM", "EAX", "SIV", "GCM", "OCB"] = "CBC"
+        ''' text from Crypto.Cipher.AES :
+            
+            MODE_ECB = 1        #: Electronic Code Book (:ref:`ecb_mode`)
+            MODE_CBC = 2        #: Cipher-Block Chaining (:ref:`cbc_mode`)
+            MODE_CFB = 3        #: Cipher Feedback (:ref:`cfb_mode`)
+            MODE_OFB = 5        #: Output Feedback (:ref:`ofb_mode`)
+            MODE_CTR = 6        #: Counter mode (:ref:`ctr_mode`)
+            MODE_OPENPGP = 7    #: OpenPGP mode (:ref:`openpgp_mode`)
+            MODE_CCM = 8        #: Counter with CBC-MAC (:ref:`ccm_mode`)
+            MODE_EAX = 9        #: :ref:`eax_mode`
+            MODE_SIV = 10       #: Synthetic Initialization Vector (:ref:`siv_mode`)
+            MODE_GCM = 11       #: Galois Counter Mode (:ref:`gcm_mode`)
+            MODE_OCB = 12       #: Offset Code Book (:ref:`ocb_mode`)
+        '''
+
+
+    def aes_private_key_generator(self, length: int=16):
         # return os.urandom(16)
         '''
+        project to client side:
+
         function generateRandomString(length) {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             // const characters = 'ABCDEFabcdef0123456789';
@@ -23,27 +49,44 @@ class AESCipher:
             return result;
         }
         '''
-
+        characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        gen = lambda key_length: ''.join([characters[ord(os.urandom(1)) % len(characters)] for _ in range(key_length)]).encode()
+        # gen = lambda len: ''.join([characters[ord(os.urandom(1)) % len(characters)] for _ in range(len)]).encode()
+        key = gen(length)
+        print(key)
+        return key
+    
+    def set_cipher(self, key: bytes, iv: bytes):
+        self.AES_KEY = key
+        self.AES_IV = iv
+        mode = getattr(AES, f"MODE_{self.aes_mode}")
+        # print(f"mode: {mode}")
+        self.cipher = AES.new(self.AES_KEY, mode, self.AES_IV)
 
     def encrypt_aes(self, plaintext: str):
-        """ 使用 AES-256-CBC 加密 """
-        iv = os.urandom(16)  # 產生 16 bytes IV
-        cipher = self.AES.new(self.AES_KEY, self.AES.MODE_CBC, iv)
-        encrypted = cipher.encrypt(pad(plaintext.encode(), self.AES.block_size))
+
+        encrypted = self.cipher.encrypt(pad(plaintext.encode(), AES.block_size))
         
         # 轉成 Base64 方便傳輸
-        encrypted_b64 = base64.b64encode(iv + encrypted).decode()
+        encrypted_b64 = base64.b64encode(self.AES_IV + encrypted).decode()
         return encrypted_b64
 
-    def decrypt_aes(self, encrypted_b64: str):
-        """ 使用 AES-256-CBC 解密 """
-        data = base64.b64decode(encrypted_b64)
-        iv = data[:16]  # 取得前 16 bytes 作為 IV
-        encrypted = data[16:]
+    def decrypt_aes(self, encrypted_b64: bytes):
+
+        self.set_cipher(self.AES_KEY, self.AES_IV)
+        base64Decoded = base64.b64decode(encrypted_b64)
+        print(f"base64Decoded: {base64Decoded}")
         
-        cipher = self.AES.new(self.AES_KEY, self.AES.MODE_CBC, iv)
-        decrypted = unpad(cipher.decrypt(encrypted), self.AES.block_size)
+        ## is this work ths same?
+        # decrypted = self.cipher.decrypt(base64Decoded)
+        # decrypted = unpad(decrypted, AES.block_size)
         
+        decrypted = self.cipher.decrypt(base64Decoded)
+        print(f"decrypted1: {decrypted}")
+        pad_len = decrypted[-1]
+        decrypted = decrypted[:-pad_len]
+        print(f"len: {pad_len} | {decrypted}")
+
         return decrypted.decode()
 
 class RSACipher:
@@ -58,7 +101,6 @@ class RSACipher:
             ed ≡ 1      (mod φ(n))
         iff d = e^{-1}  (mod φ(n))
     """
-    from Crypto.PublicKey import RSA
 
     def __init__(self):
         self.public_key, self.private_key = self.rsa_key_generator()

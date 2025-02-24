@@ -15,22 +15,26 @@ web-crypto-combat
 │       ├── app.py
 │       └── log.txt
 ├── include
+│   ├── __init__.py
 │   ├── commands.py
 │   └── crypt_functions.py
 ├── tests
 ├── .gitignore
 ├── requirements.txt
+├── LICENSE
 └── README.md
 ```
 
 ## Running the Server
 
-
+Run the following command in the root directory of the project:
+```bash
+python -m src.Flask-Server-main.app
+```
 
 ## Running the Clients
 
-
-
+open `src/client.js` in a browser
 
 ## Functionality Overview
 

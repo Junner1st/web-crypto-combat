@@ -6,7 +6,7 @@ from flask_socketio import SocketIO
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
 
-from headers.encrypt_functions import AESCipher, RSACipher
+from include.crypt_functions import AESCipher, RSACipher
 
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
