@@ -3,7 +3,7 @@ import base64
 from Crypto.Util.Padding import pad, unpad
 from Crypto.Util.number import long_to_bytes, bytes_to_long, inverse
 
-from Crypto.Cipher import AES
+from Crypto.Cipher import PKCS1_OAEP, AES
 from Crypto.PublicKey import RSA
 from typing import Literal
 
@@ -99,16 +99,18 @@ class RSACipher:
 
     other properties:
             ed ≡ 1      (mod φ(n))
-        iff d = e^{-1}  (mod φ(n))
+        iff d ≡ e^{-1}  (mod φ(n))
     """
 
     def __init__(self):
         self.public_key, self.private_key = self.rsa_key_generator()
+        self.cipher = PKCS1_OAEP.new(self.private_key)
 
     def rsa_key_generator(self):
-        """ 生成 RSA 金鑰 """
-        key = self.RSA.generate(2048)
-        return (key.n, key.e), (key.n, key.d)
+        key = RSA.generate(2048)
+        public = key.publickey()
+        private = key
+        return public, private
     
     def encrypt_rsa(self, plaintext: str):
         m = bytes_to_long(plaintext.encode())

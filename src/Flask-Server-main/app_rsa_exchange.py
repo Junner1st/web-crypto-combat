@@ -10,14 +10,14 @@ from include.crypt_functions import AESCipher, RSACipher
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-# 產生 RSA 公私鑰
-rsa_key = RSA.generate(2048)
-server_rsa_private = rsa_key.export_key()
-server_rsa_public = rsa_key.publickey().export_key()
-server_rsa_public_key = RSA.import_key(server_rsa_public)
-print(f"RAW RSA PUBLIC KEY:\n{server_rsa_public.decode()}")
-print(f"🔑 伺服器 RSA 公鑰: e={hex(server_rsa_public_key.e)}\nn={hex(server_rsa_public_key.n)}")
-print(f"🔑 伺服器 RSA 私鑰: d={hex(rsa_key.d)}\np={hex(rsa_key.p)},\nq={hex(rsa_key.q)}")
+rsa_entity = RSACipher()
+server_rsa_private = rsa_entity.private_key
+server_rsa_public = rsa_entity.public_key
+
+# server_rsa_public_key = RSA.import_key(server_rsa_public)
+# print(f"RAW RSA PUBLIC KEY:\n{server_rsa_public.decode()}")
+# print(f"🔑 伺服器 RSA 公鑰: e={hex(server_rsa_public_key.e)}\nn={hex(server_rsa_public_key.n)}")
+# print(f"🔑 伺服器 RSA 私鑰: d={hex(rsa_key.d)}\np={hex(rsa_key.p)},\nq={hex(rsa_key.q)}")
 
 aes_entity = AESCipher()
 
@@ -48,7 +48,7 @@ def index():
 def send_rsa_public():
     """客戶端請求 RSA 公鑰"""
     print("📢 客戶端請求 RSA 公鑰")
-    socketio.emit("rsa_public_key", {"public_key": server_rsa_public.decode()})
+    socketio.emit("rsa_public_key", {"public_key": server_rsa_public.export_key().decode()})
 
 @socketio.on("send_encrypted_aes_key")
 def receive_encrypted_aes_key(data):
@@ -58,7 +58,7 @@ def receive_encrypted_aes_key(data):
     encrypted_aes_key = base64.b64decode(data.get("aes_key"))
     encrypted_aes_iv = base64.b64decode(data.get("aes_iv"))
 
-    cipher_rsa = PKCS1_OAEP.new(RSA.import_key(server_rsa_private))
+    cipher_rsa = rsa_entity.cipher
     aes_entity.set_cipher(cipher_rsa.decrypt(encrypted_aes_key), cipher_rsa.decrypt(encrypted_aes_iv))
 
     print(f"AES 金鑰交換成功！AES_KEY: {aes_entity.AES_KEY}, AES_IV: {aes_entity.AES_IV }")
