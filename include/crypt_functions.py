@@ -74,17 +74,17 @@ class AESCipher:
 
         self.set_cipher(self.AES_KEY, self.AES_IV)
         base64Decoded = base64.b64decode(encrypted_b64)
-        print(f"base64Decoded: {base64Decoded}")
+        # print(f"base64Decoded: {base64Decoded}")
         
         ## is this work ths same?
         # decrypted = self.cipher.decrypt(base64Decoded)
         # decrypted = unpad(decrypted, AES.block_size)
         
         decrypted = self.cipher.decrypt(base64Decoded)
-        print(f"decrypted1: {decrypted}")
+        # print(f"decrypted1: {decrypted}")
         pad_len = decrypted[-1]
         decrypted = decrypted[:-pad_len]
-        print(f"len: {pad_len} | {decrypted}")
+        # print(f"len: {pad_len} | {decrypted}")
 
         return decrypted.decode()
 

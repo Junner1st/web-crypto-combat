@@ -44,7 +44,7 @@
 
             exchangeAESKey();
         });
-        function generateRandomString(length) {
+        function generateRandomKey(length) {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             // const characters = 'ABCDEFabcdef0123456789';
             let result = '';
@@ -59,8 +59,8 @@
             
             // aesKey = forge.random.getBytesSync(16); // 16, 24, 32 bytes for AES-128, AES-192, AES-256
             // aesIv = forge.random.getBytesSync(16);
-            // aesKey = generateRandomString(16);
-            // aesIv = generateRandomString(16);
+            // aesKey = generateRandomKey(16);
+            // aesIv = generateRandomKey(16);
             aesKey = '12GDS345678dhsth';
             aesIv = 'efF12GDS345A678d';
 

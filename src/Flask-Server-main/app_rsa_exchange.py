@@ -53,7 +53,7 @@ def receive_encrypted_aes_key(data):
     print(f"AES 金鑰交換成功！AES_KEY: {aes_entity.AES_KEY}, AES_IV: {aes_entity.AES_IV }")
     socketio.emit("aes_key_exchange_success")
 
-    
+
 
 @socketio.on("encrypted_message")
 def handle_encrypted_message(data):

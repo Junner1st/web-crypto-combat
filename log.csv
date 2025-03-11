@@ -1,0 +1,238 @@
+2025-03-11 16:31:53,445, INFO, [server started...]
+2025-03-11 16:31:53,459, WARNING,  * Debugger is active!
+2025-03-11 16:31:53,466, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 16:31:53,739, INFO, 127.0.0.1 - - [11/Mar/2025 16:31:53] "GET /socket.io/?EIO=4&transport=polling&t=PM4LEja HTTP/1.1" 200 -
+2025-03-11 16:31:53,761, INFO, 127.0.0.1 - - [11/Mar/2025 16:31:53] "POST /socket.io/?EIO=4&transport=polling&t=PM4LE-K&sid=DajX9w-pfeDOZFxfAAAA HTTP/1.1" 200 -
+2025-03-11 16:31:53,771, INFO, 127.0.0.1 - - [11/Mar/2025 16:31:53] "GET /socket.io/?EIO=4&transport=polling&t=PM4LE-M&sid=DajX9w-pfeDOZFxfAAAA HTTP/1.1" 200 -
+2025-03-11 16:31:53,782, INFO, 127.0.0.1 - - [11/Mar/2025 16:31:53] "GET /socket.io/?EIO=4&transport=polling&t=PM4LE-n&sid=DajX9w-pfeDOZFxfAAAA HTTP/1.1" 200 -
+2025-03-11 16:31:59,194, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\no-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 16:32:43,173, INFO, [server started...]
+2025-03-11 16:32:43,188, WARNING,  * Debugger is active!
+2025-03-11 16:32:43,195, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 16:32:43,477, INFO, 127.0.0.1 - - [11/Mar/2025 16:32:43] "GET /socket.io/?EIO=4&transport=polling&t=PM4LQs8 HTTP/1.1" 200 -
+2025-03-11 16:32:43,496, INFO, 127.0.0.1 - - [11/Mar/2025 16:32:43] "POST /socket.io/?EIO=4&transport=polling&t=PM4LR7S&sid=1QeIvgORx951G9gvAAAA HTTP/1.1" 200 -
+2025-03-11 16:32:43,499, INFO, 127.0.0.1 - - [11/Mar/2025 16:32:43] "GET /socket.io/?EIO=4&transport=polling&t=PM4LR7S.0&sid=1QeIvgORx951G9gvAAAA HTTP/1.1" 200 -
+2025-03-11 16:32:43,515, INFO, 127.0.0.1 - - [11/Mar/2025 16:32:43] "GET /socket.io/?EIO=4&transport=polling&t=PM4LR7o&sid=1QeIvgORx951G9gvAAAA HTTP/1.1" 200 -
+2025-03-11 16:32:53,130, INFO, Received message: 1234-----dsnkg herlie :x:
+2025-03-11 16:32:53,131, INFO, Sent acknowledgement to client.
+2025-03-11 16:32:58,436, INFO, Received message: 12345
+2025-03-11 16:32:58,438, INFO, Sent acknowledgement to client.
+2025-03-11 16:33:14,639, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\no-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 16:33:16,653, INFO, [server started...]
+2025-03-11 16:33:16,667, WARNING,  * Debugger is active!
+2025-03-11 16:33:16,676, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 16:33:16,975, INFO, 127.0.0.1 - - [11/Mar/2025 16:33:16] "GET /socket.io/?EIO=4&transport=polling&t=PM4LZ0E HTTP/1.1" 200 -
+2025-03-11 16:33:16,997, INFO, 127.0.0.1 - - [11/Mar/2025 16:33:16] "POST /socket.io/?EIO=4&transport=polling&t=PM4LZIs&sid=xM7-7Vjio2cwGuQnAAAA HTTP/1.1" 200 -
+2025-03-11 16:33:16,999, INFO, 127.0.0.1 - - [11/Mar/2025 16:33:16] "GET /socket.io/?EIO=4&transport=polling&t=PM4LZIt&sid=xM7-7Vjio2cwGuQnAAAA HTTP/1.1" 200 -
+2025-03-11 16:33:17,012, INFO, 127.0.0.1 - - [11/Mar/2025 16:33:17] "GET /socket.io/?EIO=4&transport=polling&t=PM4LZJE&sid=xM7-7Vjio2cwGuQnAAAA HTTP/1.1" 200 -
+2025-03-11 16:33:33,290, INFO, Received message: 12345
+2025-03-11 16:33:33,291, INFO, Sent acknowledgement to client.
+2025-03-11 16:52:59,703, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\no-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 16:53:01,568, INFO, [server started...]
+2025-03-11 16:53:01,581, WARNING,  * Debugger is active!
+2025-03-11 16:53:01,588, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 16:53:01,889, INFO, 127.0.0.1 - - [11/Mar/2025 16:53:01] "GET /socket.io/?EIO=4&transport=polling&t=PM4Q4KI HTTP/1.1" 200 -
+2025-03-11 16:53:01,905, INFO, 127.0.0.1 - - [11/Mar/2025 16:53:01] "POST /socket.io/?EIO=4&transport=polling&t=PM4Q4b7&sid=b0p5HowtLOw2sQ2bAAAA HTTP/1.1" 200 -
+2025-03-11 16:53:01,907, INFO, 127.0.0.1 - - [11/Mar/2025 16:53:01] "GET /socket.io/?EIO=4&transport=polling&t=PM4Q4b8&sid=b0p5HowtLOw2sQ2bAAAA HTTP/1.1" 200 -
+2025-03-11 16:53:01,925, INFO, 127.0.0.1 - - [11/Mar/2025 16:53:01] "GET /socket.io/?EIO=4&transport=polling&t=PM4Q4bS&sid=b0p5HowtLOw2sQ2bAAAA HTTP/1.1" 200 -
+2025-03-11 16:53:03,311, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\no-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 16:53:05,256, INFO, [server started...]
+2025-03-11 16:53:05,271, WARNING,  * Debugger is active!
+2025-03-11 16:53:05,279, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 16:53:05,561, INFO, 127.0.0.1 - - [11/Mar/2025 16:53:05] "GET /socket.io/?EIO=4&transport=polling&t=PM4Q5GP HTTP/1.1" 200 -
+2025-03-11 16:53:05,577, INFO, 127.0.0.1 - - [11/Mar/2025 16:53:05] "POST /socket.io/?EIO=4&transport=polling&t=PM4Q5UT&sid=Rq-OJa3oc0_iueH_AAAA HTTP/1.1" 200 -
+2025-03-11 16:53:05,580, INFO, 127.0.0.1 - - [11/Mar/2025 16:53:05] "GET /socket.io/?EIO=4&transport=polling&t=PM4Q5UW&sid=Rq-OJa3oc0_iueH_AAAA HTTP/1.1" 200 -
+2025-03-11 16:53:05,595, INFO, 127.0.0.1 - - [11/Mar/2025 16:53:05] "GET /socket.io/?EIO=4&transport=polling&t=PM4Q5Ur&sid=Rq-OJa3oc0_iueH_AAAA HTTP/1.1" 200 -
+2025-03-11 16:53:13,574, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\no-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 16:53:15,518, INFO, [server started...]
+2025-03-11 16:53:15,533, WARNING,  * Debugger is active!
+2025-03-11 16:53:15,542, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 16:53:15,808, INFO, 127.0.0.1 - - [11/Mar/2025 16:53:15] "GET /socket.io/?EIO=4&transport=polling&t=PM4Q7lI HTTP/1.1" 200 -
+2025-03-11 16:53:15,824, INFO, 127.0.0.1 - - [11/Mar/2025 16:53:15] "POST /socket.io/?EIO=4&transport=polling&t=PM4Q7-a&sid=6CQY_mkCgad8qyP_AAAA HTTP/1.1" 200 -
+2025-03-11 16:53:15,827, INFO, 127.0.0.1 - - [11/Mar/2025 16:53:15] "GET /socket.io/?EIO=4&transport=polling&t=PM4Q7-c&sid=6CQY_mkCgad8qyP_AAAA HTTP/1.1" 200 -
+2025-03-11 16:53:15,841, INFO, 127.0.0.1 - - [11/Mar/2025 16:53:15] "GET /socket.io/?EIO=4&transport=polling&t=PM4Q7-w&sid=6CQY_mkCgad8qyP_AAAA HTTP/1.1" 200 -
+2025-03-11 16:54:41,908, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\no-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 16:54:43,714, INFO, [server started...]
+2025-03-11 16:54:43,728, WARNING,  * Debugger is active!
+2025-03-11 16:54:43,736, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 16:54:44,013, INFO, 127.0.0.1 - - [11/Mar/2025 16:54:44] "GET /socket.io/?EIO=4&transport=polling&t=PM4QTH2 HTTP/1.1" 200 -
+2025-03-11 16:54:44,030, INFO, 127.0.0.1 - - [11/Mar/2025 16:54:44] "POST /socket.io/?EIO=4&transport=polling&t=PM4QTWo&sid=kTtLzIPxI-HpZBxUAAAA HTTP/1.1" 200 -
+2025-03-11 16:54:44,032, INFO, 127.0.0.1 - - [11/Mar/2025 16:54:44] "GET /socket.io/?EIO=4&transport=polling&t=PM4QTWp&sid=kTtLzIPxI-HpZBxUAAAA HTTP/1.1" 200 -
+2025-03-11 16:54:44,049, INFO, 127.0.0.1 - - [11/Mar/2025 16:54:44] "GET /socket.io/?EIO=4&transport=polling&t=PM4QTX8&sid=kTtLzIPxI-HpZBxUAAAA HTTP/1.1" 200 -
+2025-03-11 17:53:48,751, INFO, [server started...]
+2025-03-11 17:53:48,786, INFO, [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5000
+2025-03-11 17:53:48,786, INFO, [33mPress CTRL+C to quit[0m
+2025-03-11 17:53:48,786, INFO,  * Restarting with stat
+2025-03-11 17:53:50,368, INFO, [server started...]
+2025-03-11 17:53:50,381, WARNING,  * Debugger is active!
+2025-03-11 17:53:50,389, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 17:53:51,771, INFO, 127.0.0.1 - - [11/Mar/2025 17:53:51] "GET /socket.io/?EIO=4&transport=polling&t=PM4d_gG HTTP/1.1" 200 -
+2025-03-11 17:53:51,797, INFO, 127.0.0.1 - - [11/Mar/2025 17:53:51] "POST /socket.io/?EIO=4&transport=polling&t=PM4d_gb&sid=aLPcjSMTEseI_DEPAAAA HTTP/1.1" 200 -
+2025-03-11 17:53:51,801, INFO, 127.0.0.1 - - [11/Mar/2025 17:53:51] "GET /socket.io/?EIO=4&transport=polling&t=PM4d_gd&sid=aLPcjSMTEseI_DEPAAAA HTTP/1.1" 200 -
+2025-03-11 17:53:51,820, INFO, 127.0.0.1 - - [11/Mar/2025 17:53:51] "GET /socket.io/?EIO=4&transport=polling&t=PM4d_h4&sid=aLPcjSMTEseI_DEPAAAA HTTP/1.1" 200 -
+2025-03-11 17:53:59,013, INFO, Sent acknowledgement to client.
+2025-03-11 17:56:43,185, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\AES-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 17:56:43,410, INFO,  * Restarting with stat
+2025-03-11 17:56:45,345, INFO, [server started...]
+2025-03-11 17:56:45,359, WARNING,  * Debugger is active!
+2025-03-11 17:56:45,367, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 17:56:45,632, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:45] "GET /socket.io/?EIO=4&transport=polling&t=PM4efr9 HTTP/1.1" 200 -
+2025-03-11 17:56:45,646, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:45] "POST /socket.io/?EIO=4&transport=polling&t=PM4eg75&sid=AwjF_b6WLR0GUDGgAAAA HTTP/1.1" 200 -
+2025-03-11 17:56:45,647, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:45] "GET /socket.io/?EIO=4&transport=polling&t=PM4eg76&sid=AwjF_b6WLR0GUDGgAAAA HTTP/1.1" 200 -
+2025-03-11 17:56:45,660, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:45] "GET /socket.io/?EIO=4&transport=polling&t=PM4eg7N&sid=AwjF_b6WLR0GUDGgAAAA HTTP/1.1" 200 -
+2025-03-11 17:56:47,100, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\AES-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 17:56:47,263, INFO,  * Restarting with stat
+2025-03-11 17:56:49,023, INFO, [server started...]
+2025-03-11 17:56:49,036, WARNING,  * Debugger is active!
+2025-03-11 17:56:49,044, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 17:56:49,303, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:49] "GET /socket.io/?EIO=4&transport=polling&t=PM4eglw HTTP/1.1" 200 -
+2025-03-11 17:56:49,315, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:49] "POST /socket.io/?EIO=4&transport=polling&t=PM4eh0Q&sid=hEY-Byz9F7V8Q2CuAAAA HTTP/1.1" 200 -
+2025-03-11 17:56:49,317, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:49] "GET /socket.io/?EIO=4&transport=polling&t=PM4eh0R&sid=hEY-Byz9F7V8Q2CuAAAA HTTP/1.1" 200 -
+2025-03-11 17:56:49,328, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:49] "GET /socket.io/?EIO=4&transport=polling&t=PM4eh0g&sid=hEY-Byz9F7V8Q2CuAAAA HTTP/1.1" 200 -
+2025-03-11 17:56:50,849, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\AES-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 17:56:51,015, INFO,  * Restarting with stat
+2025-03-11 17:56:52,709, INFO, [server started...]
+2025-03-11 17:56:52,722, WARNING,  * Debugger is active!
+2025-03-11 17:56:52,729, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 17:56:52,980, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:52] "GET /socket.io/?EIO=4&transport=polling&t=PM4ehjg HTTP/1.1" 200 -
+2025-03-11 17:56:52,996, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:52] "POST /socket.io/?EIO=4&transport=polling&t=PM4ehvu&sid=HNNtgN0dUySmsh1xAAAA HTTP/1.1" 200 -
+2025-03-11 17:56:52,998, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:52] "GET /socket.io/?EIO=4&transport=polling&t=PM4ehvx&sid=HNNtgN0dUySmsh1xAAAA HTTP/1.1" 200 -
+2025-03-11 17:56:53,015, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:53] "GET /socket.io/?EIO=4&transport=polling&t=PM4ehwG&sid=HNNtgN0dUySmsh1xAAAA HTTP/1.1" 200 -
+2025-03-11 17:56:57,245, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\AES-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 17:56:57,386, INFO,  * Restarting with stat
+2025-03-11 17:56:59,312, INFO, [server started...]
+2025-03-11 17:56:59,327, WARNING,  * Debugger is active!
+2025-03-11 17:56:59,335, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 17:56:59,624, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:59] "GET /socket.io/?EIO=4&transport=polling&t=PM4ejH8 HTTP/1.1" 200 -
+2025-03-11 17:56:59,639, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:59] "POST /socket.io/?EIO=4&transport=polling&t=PM4ejXi&sid=logbYZhT5PzuBT-WAAAA HTTP/1.1" 200 -
+2025-03-11 17:56:59,643, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:59] "GET /socket.io/?EIO=4&transport=polling&t=PM4ejXk&sid=logbYZhT5PzuBT-WAAAA HTTP/1.1" 200 -
+2025-03-11 17:56:59,659, INFO, 127.0.0.1 - - [11/Mar/2025 17:56:59] "GET /socket.io/?EIO=4&transport=polling&t=PM4ejY3&sid=logbYZhT5PzuBT-WAAAA HTTP/1.1" 200 -
+2025-03-11 17:57:31,622, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\AES-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 17:57:31,772, INFO,  * Restarting with stat
+2025-03-11 17:57:33,597, INFO, [server started...]
+2025-03-11 17:57:33,612, WARNING,  * Debugger is active!
+2025-03-11 17:57:33,621, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 17:57:33,890, INFO, 127.0.0.1 - - [11/Mar/2025 17:57:33] "GET /socket.io/?EIO=4&transport=polling&t=PM4ergd HTTP/1.1" 200 -
+2025-03-11 17:57:33,904, INFO, 127.0.0.1 - - [11/Mar/2025 17:57:33] "POST /socket.io/?EIO=4&transport=polling&t=PM4erv7&sid=AvxCOSBY9sO3jV3fAAAA HTTP/1.1" 200 -
+2025-03-11 17:57:33,908, INFO, 127.0.0.1 - - [11/Mar/2025 17:57:33] "GET /socket.io/?EIO=4&transport=polling&t=PM4erv8&sid=AvxCOSBY9sO3jV3fAAAA HTTP/1.1" 200 -
+2025-03-11 17:57:33,923, INFO, 127.0.0.1 - - [11/Mar/2025 17:57:33] "GET /socket.io/?EIO=4&transport=polling&t=PM4ervT&sid=AvxCOSBY9sO3jV3fAAAA HTTP/1.1" 200 -
+2025-03-11 17:57:35,399, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\AES-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 17:57:35,541, INFO,  * Restarting with stat
+2025-03-11 18:02:16,779, INFO, [server started...]
+2025-03-11 18:02:16,822, INFO, [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5000
+2025-03-11 18:02:16,822, INFO, [33mPress CTRL+C to quit[0m
+2025-03-11 18:02:16,822, INFO,  * Restarting with stat
+2025-03-11 18:02:18,439, INFO, [server started...]
+2025-03-11 18:02:18,453, WARNING,  * Debugger is active!
+2025-03-11 18:02:18,461, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 18:02:18,751, INFO, 127.0.0.1 - - [11/Mar/2025 18:02:18] "GET /socket.io/?EIO=4&transport=polling&t=PM4fwnk HTTP/1.1" 200 -
+2025-03-11 18:02:18,768, INFO, 127.0.0.1 - - [11/Mar/2025 18:02:18] "POST /socket.io/?EIO=4&transport=polling&t=PM4fxS4&sid=Y-_GVDGjvvIG6NNOAAAA HTTP/1.1" 200 -
+2025-03-11 18:02:18,771, INFO, 127.0.0.1 - - [11/Mar/2025 18:02:18] "GET /socket.io/?EIO=4&transport=polling&t=PM4fxS6&sid=Y-_GVDGjvvIG6NNOAAAA HTTP/1.1" 200 -
+2025-03-11 18:02:18,791, INFO, 127.0.0.1 - - [11/Mar/2025 18:02:18] "GET /socket.io/?EIO=4&transport=polling&t=PM4fxSW&sid=Y-_GVDGjvvIG6NNOAAAA HTTP/1.1" 200 -
+2025-03-11 18:02:19,980, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:19,982, INFO, Received message: 123213123
+2025-03-11 18:02:23,061, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:23,063, INFO, Received message: 123213123
+2025-03-11 18:02:24,497, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:24,499, INFO, Received message: 123213123
+2025-03-11 18:02:24,657, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:24,658, INFO, Received message: 123213123
+2025-03-11 18:02:24,811, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:24,812, INFO, Received message: 123213123
+2025-03-11 18:02:24,963, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:24,964, INFO, Received message: 123213123
+2025-03-11 18:02:25,117, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:25,118, INFO, Received message: 123213123
+2025-03-11 18:02:25,270, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:25,272, INFO, Received message: 123213123
+2025-03-11 18:02:25,423, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:25,424, INFO, Received message: 123213123
+2025-03-11 18:02:25,647, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:25,649, INFO, Received message: 123213123
+2025-03-11 18:02:27,441, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:27,443, INFO, Received message: 123213123
+2025-03-11 18:02:27,593, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:27,595, INFO, Received message: 123213123
+2025-03-11 18:02:27,747, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:27,748, INFO, Received message: 123213123
+2025-03-11 18:02:27,901, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:27,902, INFO, Received message: 123213123
+2025-03-11 18:02:28,036, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:28,037, INFO, Received message: 123213123
+2025-03-11 18:02:28,162, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:28,163, INFO, Received message: 123213123
+2025-03-11 18:02:28,524, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:28,525, INFO, Received message: 123213123
+2025-03-11 18:02:28,651, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:28,653, INFO, Received message: 123213123
+2025-03-11 18:02:28,777, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:28,778, INFO, Received message: 123213123
+2025-03-11 18:02:28,914, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:28,916, INFO, Received message: 123213123
+2025-03-11 18:02:29,058, INFO, Sent acknowledgement to client.
+2025-03-11 18:02:29,061, INFO, Received message: 123213123
+2025-03-11 18:03:01,097, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\include\\crypt_functions.py', reloading
+2025-03-11 18:03:01,205, INFO,  * Restarting with stat
+2025-03-11 18:03:02,966, INFO, [server started...]
+2025-03-11 18:03:02,979, WARNING,  * Debugger is active!
+2025-03-11 18:03:02,985, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 18:03:03,249, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:03] "GET /socket.io/?EIO=4&transport=polling&t=PM4g6AE HTTP/1.1" 200 -
+2025-03-11 18:03:03,266, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:03] "POST /socket.io/?EIO=4&transport=polling&t=PM4g6JM&sid=92JLnxrTf6d1eu6UAAAA HTTP/1.1" 200 -
+2025-03-11 18:03:03,267, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:03] "GET /socket.io/?EIO=4&transport=polling&t=PM4g6JO&sid=92JLnxrTf6d1eu6UAAAA HTTP/1.1" 200 -
+2025-03-11 18:03:03,280, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:03] "GET /socket.io/?EIO=4&transport=polling&t=PM4g6Je&sid=92JLnxrTf6d1eu6UAAAA HTTP/1.1" 200 -
+2025-03-11 18:03:07,177, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\include\\crypt_functions.py', reloading
+2025-03-11 18:03:07,330, INFO,  * Restarting with stat
+2025-03-11 18:03:08,973, INFO, [server started...]
+2025-03-11 18:03:08,985, WARNING,  * Debugger is active!
+2025-03-11 18:03:08,993, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 18:03:09,257, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:09] "GET /socket.io/?EIO=4&transport=polling&t=PM4g7ZS HTTP/1.1" 200 -
+2025-03-11 18:03:09,271, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:09] "POST /socket.io/?EIO=4&transport=polling&t=PM4g7nD&sid=r_Yt6anaUgqnaJ6_AAAA HTTP/1.1" 200 -
+2025-03-11 18:03:09,274, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:09] "GET /socket.io/?EIO=4&transport=polling&t=PM4g7nE&sid=r_Yt6anaUgqnaJ6_AAAA HTTP/1.1" 200 -
+2025-03-11 18:03:09,287, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:09] "GET /socket.io/?EIO=4&transport=polling&t=PM4g7nW&sid=r_Yt6anaUgqnaJ6_AAAA HTTP/1.1" 200 -
+2025-03-11 18:03:15,802, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\include\\crypt_functions.py', reloading
+2025-03-11 18:03:15,937, INFO,  * Restarting with stat
+2025-03-11 18:03:17,859, INFO, [server started...]
+2025-03-11 18:03:17,875, WARNING,  * Debugger is active!
+2025-03-11 18:03:17,885, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 18:03:18,181, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:18] "GET /socket.io/?EIO=4&transport=polling&t=PM4g9fw HTTP/1.1" 200 -
+2025-03-11 18:03:18,198, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:18] "POST /socket.io/?EIO=4&transport=polling&t=PM4g9yh&sid=2K1hO8LXbzMzAvIRAAAA HTTP/1.1" 200 -
+2025-03-11 18:03:18,204, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:18] "GET /socket.io/?EIO=4&transport=polling&t=PM4g9yh.0&sid=2K1hO8LXbzMzAvIRAAAA HTTP/1.1" 200 -
+2025-03-11 18:03:18,219, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:18] "GET /socket.io/?EIO=4&transport=polling&t=PM4g9z2&sid=2K1hO8LXbzMzAvIRAAAA HTTP/1.1" 200 -
+2025-03-11 18:03:18,818, INFO, Sent acknowledgement to client.
+2025-03-11 18:03:18,819, INFO, Received message: 123213123
+2025-03-11 18:03:20,244, INFO, Sent acknowledgement to client.
+2025-03-11 18:03:20,245, INFO, Received message: 123213123
+2025-03-11 18:03:21,304, INFO, Sent acknowledgement to client.
+2025-03-11 18:03:21,305, INFO, Received message: 123213123
+2025-03-11 18:03:22,512, INFO, Sent acknowledgement to client.
+2025-03-11 18:03:22,512, INFO, Received message: 123213123
+2025-03-11 18:03:41,578, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\AES-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 18:03:41,676, INFO,  * Restarting with stat
+2025-03-11 18:03:43,415, INFO, [server started...]
+2025-03-11 18:03:43,429, WARNING,  * Debugger is active!
+2025-03-11 18:03:43,437, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 18:03:43,686, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:43] "GET /socket.io/?EIO=4&transport=polling&t=PM4gFxK HTTP/1.1" 200 -
+2025-03-11 18:03:43,721, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:43] "POST /socket.io/?EIO=4&transport=polling&t=PM4gGBB&sid=UlajgaCtvFyBT8iRAAAA HTTP/1.1" 200 -
+2025-03-11 18:03:43,721, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:43] "GET /socket.io/?EIO=4&transport=polling&t=PM4gGBC&sid=UlajgaCtvFyBT8iRAAAA HTTP/1.1" 200 -
+2025-03-11 18:03:45,216, INFO,  * Detected change in 'D:\\Junner\\hackersir\\¾Ç³N\\ºô¸ô¥[±K¹ê¾Ô\\web-crypto-combat\\AES-encrypted\\src\\Flask-Server-main\\app.py', reloading
+2025-03-11 18:03:45,314, INFO,  * Restarting with stat
+2025-03-11 18:03:47,047, INFO, [server started...]
+2025-03-11 18:03:47,061, WARNING,  * Debugger is active!
+2025-03-11 18:03:47,070, INFO,  * Debugger PIN: 870-624-759
+2025-03-11 18:03:47,398, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:47] "GET /socket.io/?EIO=4&transport=polling&t=PM4gGjC HTTP/1.1" 200 -
+2025-03-11 18:03:47,415, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:47] "POST /socket.io/?EIO=4&transport=polling&t=PM4gH5C&sid=bqfdjikzQ1UN05rJAAAA HTTP/1.1" 200 -
+2025-03-11 18:03:47,418, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:47] "GET /socket.io/?EIO=4&transport=polling&t=PM4gH5D&sid=bqfdjikzQ1UN05rJAAAA HTTP/1.1" 200 -
+2025-03-11 18:03:47,431, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:47] "GET /socket.io/?EIO=4&transport=polling&t=PM4gH5X&sid=bqfdjikzQ1UN05rJAAAA HTTP/1.1" 200 -
+2025-03-11 18:03:47,437, INFO, 127.0.0.1 - - [11/Mar/2025 18:03:47] "POST /socket.io/?EIO=4&transport=polling&t=PM4gH5X.0&sid=bqfdjikzQ1UN05rJAAAA HTTP/1.1" 200 -
+2025-03-11 18:03:47,442, INFO, Sent acknowledgement to client.
+2025-03-11 18:03:47,444, INFO, Received message: 123213123
+2025-03-11 18:03:48,522, INFO, Sent acknowledgement to client.
+2025-03-11 18:03:48,523, INFO, Received message: 123213123
+2025-03-11 18:03:52,802, INFO, Sent acknowledgement to client.
+2025-03-11 18:03:52,805, INFO, Received message: 123213123
+2025-03-11 18:03:53,533, INFO, Sent acknowledgement to client.
+2025-03-11 18:03:53,535, INFO, Received message: 123213123
+2025-03-11 18:03:54,437, INFO, Sent acknowledgement to client.
+2025-03-11 18:03:54,438, INFO, Received message: 123213123
