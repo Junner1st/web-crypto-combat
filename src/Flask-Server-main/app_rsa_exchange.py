@@ -28,17 +28,6 @@ aes_entity = AESCipher()
 #     return base64.b64encode(encrypted).decode('utf-8')
 
 
-def decrypt_aes(encrypted_text):
-    aes_cipher = AES.new(aes_entity.AES_KEY, AES.MODE_CBC, aes_entity.AES_IV)
-    base64Decoded = base64.b64decode(encrypted_text)
-    decrypted = aes_cipher.decrypt(base64Decoded)
-
-    pad_len = decrypted[-1]
-    decrypted = decrypted[:-pad_len].decode()
-
-    return decrypted
-
-
 
 @app.route('/')
 def index():

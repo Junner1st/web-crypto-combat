@@ -40,7 +40,6 @@ class AESCipher:
 
         function generateRandomString(length) {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            // const characters = 'ABCDEFabcdef0123456789';
             let result = '';
             const charactersLength = characters.length;
             for (let i = 0; i < length; i++) {
@@ -63,13 +62,13 @@ class AESCipher:
         # print(f"mode: {mode}")
         self.cipher = AES.new(self.AES_KEY, mode, self.AES_IV)
 
-    def encrypt_aes(self, plaintext: str):
+    # def encrypt_aes(self, plaintext: str):
 
-        encrypted = self.cipher.encrypt(pad(plaintext.encode(), AES.block_size))
+    #     encrypted = self.cipher.encrypt(pad(plaintext.encode(), AES.block_size))
         
-        # 轉成 Base64 方便傳輸
-        encrypted_b64 = base64.b64encode(self.AES_IV + encrypted).decode()
-        return encrypted_b64
+    #     # 轉成 Base64 方便傳輸
+    #     encrypted_b64 = base64.b64encode(self.AES_IV + encrypted).decode()
+    #     return encrypted_b64
 
     def decrypt_aes(self, encrypted_b64: bytes):
 
@@ -112,15 +111,15 @@ class RSACipher:
         private = key
         return public, private
     
-    def encrypt_rsa(self, plaintext: str):
-        m = bytes_to_long(plaintext.encode())
-        n, e = self.public_key
-        c = pow(m, n, e)
-        return c
+    # def encrypt_rsa(self, plaintext: str):
+    #     m = bytes_to_long(plaintext.encode())
+    #     n, e = self.public_key
+    #     c = pow(m, n, e)
+    #     return c
     
-    def decrypt_rsa(self, c: int):
-        n, d = self.private_key
-        m = pow(c, n, d)
-        return long_to_bytes(m).decode()
+    # def decrypt_rsa(self, c: int):
+    #     n, d = self.private_key
+    #     m = pow(c, n, d)
+    #     return long_to_bytes(m).decode()
 
         
