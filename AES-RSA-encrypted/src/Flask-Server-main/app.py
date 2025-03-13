@@ -54,7 +54,6 @@ def handle_encrypted_message(data):
 
     ''' extract the initialization vector; before ":" '''
     aes_iv = base64.b64decode(raw_message.split(":")[0])
-    print(f"aes_iv: {aes_iv}")
     aes_encrypted_message = raw_message.split(":")[1]
     # aes_encrypted_message = aes_encrypted_message
 
@@ -66,12 +65,7 @@ def handle_encrypted_message(data):
         key=aes_key,
         iv=aes_iv
     )
-    print(f"aes_key: {aes_entity.AES_KEY}")
-    print(f"aes_iv: {aes_entity.AES_IV}")
-    print(f"aes_encrypted_message: {aes_encrypted_message}")
     decrypted_message = aes_entity.decrypt_aes(aes_encrypted_message)
-
-    print(f"len of decrypted_message: {len(decrypted_message)}")
 
     logger.info(f"[crypt] Received message:{decrypted_message}")
 
