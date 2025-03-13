@@ -42,6 +42,9 @@ def handle_encrypted_message(data):
         key=aes_key,
         iv=aes_iv
     )
+    print(f"aes_key: {aes_entity.AES_KEY}")
+    print(f"aes_iv: {aes_entity.AES_IV}")
+    print(f"aes_encrypted_message: {aes_encrypted_message}")
     decrypted_message = aes_entity.decrypt_aes(aes_encrypted_message)
 
     logger.info(f"Received message: {decrypted_message}")

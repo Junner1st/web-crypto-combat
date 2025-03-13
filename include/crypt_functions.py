@@ -74,7 +74,7 @@ class AESCipher:
 
         self.set_cipher(self.AES_KEY, self.AES_IV)
         base64Decoded = base64.b64decode(encrypted_b64)
-        # print(f"base64Decoded: {base64Decoded}")
+        print(f"[AESCipher.decrypt_aes] base64Decoded: {base64Decoded}")
         
         ## is this work ths same?
         # decrypted = self.cipher.decrypt(base64Decoded)

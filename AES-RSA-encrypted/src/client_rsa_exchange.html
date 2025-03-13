@@ -16,32 +16,10 @@
     <p>SENT STATUS: <span id="sentStatus"></span></p>
 
     <script>
-        const socket = io("http://localhost:5000");
-
-        function sentMessage() {
-            /* reset sent status */
-            document.getElementById("sentStatus").style.color = "red";
-            document.getElementById("sentStatus").innerText = "not received";
-
-            /* sent text */
-            let text = document.getElementById("message").value;
-            if (!text) {
-                alert("請輸入訊息！");
-                return;
-            }
-            console.log("訊息:", text);
-            text = encryptMessage(text);
-            socket.emit("client_sent_message", { message: text });
-            // document.getElementById("encrypted_text").innerText = text;
-        }
-
-        /* listening to server response */
-        socket.on("server_sent_message", (data) => {
-            if (data.message === "recieved") {
-                document.getElementById("sentStatus").style.color = "green";
-                document.getElementById("sentStatus").innerText = "received";
-            }
-        });
+        const socket = io("http://localhost:5055");
+        let RSAPublicKey, aesKey, aesIv;
+        
+        socket.emit("client_request_rsa_public");
 
         function generateRandomKey(length) {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -55,18 +33,34 @@
         }
 
 
-        function exchangeAESKey(key_digits) {
-            let aeskey = generateRandomKey(key_digits);
+        function exchangeAESKey() {
+            aesKey = generateRandomKey(16);
+            console.log("AES key:\n", aesKey);
+
+            // let ecrypted_aeskey = RSAPublicKey.encrypt(aesKey, 'RSA-OAEP', {
+            //     md: forge.md.sha256.create()
+            // });
+            let ecrypted_aeskey = RSAPublicKey.encrypt(aesKey, 'RSA-OAEP');
 
             socket.emit("client_sent_aes_key", {
-                aes_key: btoa(aeskey)
+                aes_key: btoa(ecrypted_aeskey)
             });
-            return aeskey;
+            return aesKey;
         }
 
+        
+        socket.on("server_sent_rsa_public_key", (data) => {
+            RSAPublicKey = forge.pki.publicKeyFromPem(data.public_key);
+            console.log("recieced RSA public:\n", RSAPublicKey);
+
+            key = exchangeAESKey();
+            console.log("[server_sent_rsa_public_key] AES key copy:\n", key);
+            console.log("[server_sent_rsa_public_key] AES key assigned:\n", aesKey);
+        });
+
+        
         function encryptMessage(message) {
-            const aesKey = exchangeAESKey(16);
-            const aesIv = generateRandomKey(16);
+            aesIv = generateRandomKey(16);
 
             let keyBytes = CryptoJS.enc.Utf8.parse(aesKey);
             let ivBytes = CryptoJS.enc.Utf8.parse(aesIv);
@@ -78,13 +72,40 @@
             }).toString();
 
             /* add IV before encrypted message. The for mat is "IV:CIPHERTEXT" */
+            console.log("IV:", aesIv);
             let ivBase64 = CryptoJS.enc.Base64.stringify(ivBytes);
             let encryptedWithIv = ivBase64 + ":" + encrypted;
 
             console.log("加密後訊息:", encryptedWithIv);
+            
             return encryptedWithIv;
         }
 
+        function sentMessage() {
+            /* reset sent status */
+            document.getElementById("sentStatus").style.color = "red";
+            document.getElementById("sentStatus").innerText = "not received";
+
+            /* sent text */
+            let text = document.getElementById("message").value;
+            if (!text) {
+                alert("請輸入訊息！");
+                return;
+            }
+            console.log("訊息:", text);
+
+            
+            text = encryptMessage(text);
+            socket.emit("client_sent_message", { message: text });            
+        }
+
+        /* listening to server response */
+        socket.on("server_sent_message", (data) => {
+            if (data.message === "recieved") {
+                document.getElementById("sentStatus").style.color = "green";
+                document.getElementById("sentStatus").innerText = "received";
+            }
+        });
 
     </script>
 
