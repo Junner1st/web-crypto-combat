@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>雙向加解密測試</title>
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="./Flask-Server-main/static/jsbn.js"></script>
+    <script src="./Flask-Server-main/static/diffiejs.js"></script>
 </head>
 <body>
     <h2>雙向加解密測試</h2>
@@ -18,22 +20,22 @@
     <script>
         const socket = io("http://localhost:5055");
         let RSAPublicKey, aesKey, aesIv;
+
+        
         
         socket.emit("client_request_rsa_public");
 
-
         function generateRandomKey(length) {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            // const characters = 'ABCDEFabcdef0123456789';
             let result = '';
             const charactersLength = characters.length;
             for (let i = 0; i < length; i++) {
-                const randomBuffer = new Uint32Array(1);
-                window.crypto.getRandomValues(randomBuffer);
-                let randomNumber = randomBuffer[0] / (0xffffffff + 1);
-                result += characters.charAt(Math.floor(randomNumber * charactersLength));
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
             }
             return result;
         }
+
 
         function exchangeAESKey() {
             aesKey = generateRandomKey(16);
