@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OFB the Mermaid</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+  <h2>OFB the Mermaid</h2>
+  <label>Plaintext (UTF-8):</label><br>
+  <textarea id="plaintext" rows="3" cols="40">makesure u have my cheese!</textarea><br><br>
+
+  <label>Key (32 hex chars, 16 bytes):</label><br>
+  <input id="key" value="001122334455ffc78899aabbccddeeff" size="40"><br><br>
+
+  <label>IV (32 hex chars, 16 bytes):</label><br>
+  <input id="iv" value="0102030405060708090a0b0c0d0e0f10" size="40"><br><br>
+
+  <button onclick="encryptOFB()">Encrypt</button>
+
+  <h3>result:</h3>
+  <pre id="output"></pre>
+
+<script>
+function encryptOFB() {
+  const output = document.getElementById("output");
+  output.textContent = "";
+
+  const plaintext = document.getElementById("plaintext").value;
+  const keyHex = document.getElementById("key").value;
+  const ivHex = document.getElementById("iv").value;
+
+  const key = CryptoJS.enc.Hex.parse(keyHex);
+  let iv = CryptoJS.enc.Hex.parse(ivHex);
+  const blockSize = 16;
+
+  const textBytes = CryptoJS.enc.Utf8.parse(plaintext);
+  const textHex = textBytes.toString(CryptoJS.enc.Hex);
+
+  const blocks = [];
+  console.log(blocks)
+  for (let i = 0; i < textHex.length; i += blockSize * 2) {
+    blocks.push(textHex.slice(i, i + blockSize * 2));
+  }
+
+  let ciphertextHex = "";
+
+  blocks.forEach((blockHex, index) => {
+    const keystream = CryptoJS.AES.encrypt(iv, key, { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.NoPadding }).ciphertext;
+
+    let block = CryptoJS.enc.Hex.parse(blockHex.padEnd(blockSize * 2, '0')); // pad 0s
+    const cipherBlock = block.clone();
+
+    
+    length = block.sigBytes / 4;
+    for (let i = 0; i < length; i++) {
+      cipherBlock.words[i] ^= keystream.words[i];
+    }    
+
+    const resultHex = CryptoJS.enc.Hex.stringify(cipherBlock).slice(0, blockHex.length);
+    ciphertextHex += resultHex;
+
+    output.textContent += `Block ${index + 1}:\n`;
+    output.textContent += `  Keystream  : ${CryptoJS.enc.Hex.stringify(keystream)}\n`;
+    output.textContent += `  Plaintext  : ${blockHex}\n`;
+    output.textContent += `  Ciphertext : ${resultHex}\n\n`;
+
+    iv = keystream;
+  });
+
+  output.textContent += `Final ciphertext:\n${ciphertextHex}`;
+}
+</script>
+</body>
+</html>
