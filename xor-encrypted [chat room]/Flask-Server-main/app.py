@@ -1,54 +1,5 @@
-'''
-character: c_i, server
-js FUNCTION any_client_publish_rsa_key() -> INTEGER {
-    1. if (ANY c_i) join, c_i publish and broadcast its own rsa public key to (ANY client) ∩ (not self);
-    2. SOCKET.ON listen_to_checked_recieved_PUBLIC() -> INTEGER;
-    
-    RETURN 2.
-}
-
-js SOCKET.ON any_client_listen_rsa_public() -> VOID {
-    1. SOCKET.ON listen to (ANY c_i) ( "rsa_public" );
-    2. CALL sent_rsa_encrypted_aes_key(*) -> BOOLEAN;
-}
-
-js FUNCTION sent_rsa_encrypted_aes_key( rsaPublic/rsa entity, aesKey ) -> BOOLEAN {
-    1. EMIT rsaPublic_encrypt( aesKey );
-    2. SOCKET.ON listen_to_checked_recieved_SINGLE() -> BOOLEAN;
-
-    RETURN 2.
-}
-
-js FUNCTION client_decrypt_aes_key( rsaPrivate/rsa entity, encrypted_aesKey ) -> BOOLEAN {
-    1. decrypt encrypted_aesKey;
-    
-    return 1. : decrypt success or not 
-}
-
-js FUNCTION client_message_to_server(STRING text) -> BOOLEAN {
-    1. EMIT text to server;
-    2. SOCKET.ON server_reply_recieved() -> BOOLEAN;
-
-    RETURN 2. 
-}
-
-python FUNCTION server_forward_message_to_client_ANY( STRING text ) -> INREGER {
-    1. SOCKET.ON server_forward_message() to (ANY client) ∩ (not self);
-    2. SOCKET.ON listen_to_client_reply_recieved_PUBLIC() -> INREGER;
-
-    RETURN 2. 
-}
-
-python FUNCTION server_forward_message_to_client_SINGLE( STRING text, STRING sid ) -> BOOLEAN {
-    1. SOCKET.ON server_forward_message() to c_{sid};
-    2. SOCKET.ON listen_to_client_reply_recieved_SINGLE() -> BOOLEAN;
-
-    RETURN 2. 
-}
-'''
-
 from flask import Flask, request
-from flask_socketio import SocketIO, emit, send
+from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 import logging
 import json

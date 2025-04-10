@@ -3,6 +3,7 @@
 <head>
   <title>Secure Chat Client</title>
   <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
   <h1>Secure Chat</h1>
@@ -16,6 +17,11 @@
     let rsaKeyPair = null;
     let aesKey = null;
     const rsaPublicKeys = {}; // { sid: rsaKey }
+    const initialVector = crypto.getRandomValues(new Uint8Array(16));
+    let temp_iv = CryptoJS.lib.WordArray.create(initialVector);
+    console.log(`create initialVector: ${temp_iv}`);
+    console.log(typeof temp_iv, temp_iv.sigBytes, temp_iv.words, temp_iv.toString(CryptoJS.enc.Hex))
+    
 
     function log(msg) {
       console.log(`[Log] ${msg}`);
@@ -44,21 +50,65 @@
     }
 
     async function generateAESKey() {
-      return crypto.subtle.generateKey({
-        name: "AES-GCM",
-        length: 256
-      }, true, ["encrypt", "decrypt"]);
+      key = CryptoJS.lib.WordArray.create(crypto.getRandomValues(new Uint8Array(16)));
+      log(`Generated AES key: ${key}`);
+      console.log(typeof key, key.sigBytes, key.words, key.toString(CryptoJS.enc.Hex))
+      return key;
     }
 
-    async function exportAESKey(key) {
-      const raw = await crypto.subtle.exportKey("raw", key);
-      return btoa(String.fromCharCode(...new Uint8Array(raw)));
+
+    async function encryptOFB(plaintext, key, ivWordArray, decrypt = false) {
+      let iv = ivWordArray;
+      // log(`initialVector: ${iv}`);
+      // console.log(typeof iv, iv.sigBytes, iv.words, iv.toString(CryptoJS.enc.Hex))
+      const blockSize = 16;
+
+      textHex = null;
+      if (!decrypt) {
+        const textBytes = CryptoJS.enc.Utf8.parse(plaintext);
+        textHex = textBytes.toString(CryptoJS.enc.Hex);
+      } else {
+        textHex = plaintext;
+      }
+
+      const blocks = [];
+      // console.log(blocks)
+      for (let i = 0; i < textHex.length; i += blockSize * 2) {
+        blocks.push(textHex.slice(i, i + blockSize * 2));
+      }
+
+      let ciphertextHex = "";
+
+      blocks.forEach((blockHex, index) => {
+        const keystream = CryptoJS.AES.encrypt(iv, key, { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.NoPadding }).ciphertext;
+        // console.log(`keystream: ${keystream} with decrypt? ${decrypt}`);
+
+        let block = CryptoJS.enc.Hex.parse(blockHex.padEnd(blockSize * 2, '0')); // pad 0s
+        const cipherBlock = block.clone();
+
+        
+        length = block.sigBytes / 4;
+        for (let i = 0; i < length; i++) {
+          cipherBlock.words[i] ^= keystream.words[i];
+        }    
+
+        const resultHex = CryptoJS.enc.Hex.stringify(cipherBlock).slice(0, blockHex.length);
+        ciphertextHex += resultHex;
+
+        iv = keystream;
+      });
+
+      if (!decrypt) {
+        console.log(`ciphertext (Hex): ${ciphertextHex}`);
+        return ciphertextHex;
+      } else {
+        const decrypted = CryptoJS.enc.Hex.parse(ciphertextHex);
+        const decryptedUtf8 = CryptoJS.enc.Utf8.stringify(decrypted);
+        console.log(`decrypted ciphertext (Utf8): ${decryptedUtf8}`);
+        return decryptedUtf8;
+      }
     }
 
-    async function importAESKey(base64) {
-      const raw = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
-      return crypto.subtle.importKey("raw", raw, "AES-GCM", true, ["encrypt", "decrypt"]);
-    }
 
     async function encryptWithRSA(publicKey, data) {
       return crypto.subtle.encrypt({ name: "RSA-OAEP" }, publicKey, data);
@@ -69,19 +119,23 @@
     }
 
     async function encryptWithAES(key, data) {
-      const iv = crypto.getRandomValues(new Uint8Array(12));
-      const enc = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, data);
-      return { iv: btoa(String.fromCharCode(...iv)), data: btoa(String.fromCharCode(...new Uint8Array(enc))) };
+      iv = CryptoJS.lib.WordArray.create(initialVector);
+      const enc = await encryptOFB(data, key, iv);
+      return { iv: iv, data: enc };
     }
 
     async function decryptWithAES(key, message, init_vec) {
-      payload = {
-        iv: init_vec,
-        data: message
-      };
-      const iv = Uint8Array.from(atob(payload.iv), c => c.charCodeAt(0));
-      const data = Uint8Array.from(atob(payload.data), c => c.charCodeAt(0));
-      return crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, data);
+      return await encryptOFB(message, key, init_vec, true);
+    }
+
+    async function sendAESToClient(sid) {
+      const pubKey = rsaPublicKeys[sid];
+      const aesString = aesKey.toString(CryptoJS.enc.Hex);
+      key = new TextEncoder().encode(aesString);      
+
+      encrypted = await encryptWithRSA(pubKey, key);
+      socket.emit("send_aes_to_newcomer", { target_sid: sid, encrypted_aes: btoa(String.fromCharCode(...new Uint8Array(encrypted))) });
+      log(`Encrypted and sent AES key to ${sid}`);
     }
 
     socket.on("connect", async () => {
@@ -123,32 +177,19 @@
       log("Received encrypted AES key.");
       const decoded = Uint8Array.from(atob(encrypted_aes), c => c.charCodeAt(0));
       const decrypted = await decryptWithRSA(rsaKeyPair.privateKey, decoded);
-      const aesStr = new TextDecoder().decode(decrypted);
-      aesKey = await importAESKey(aesStr);
-      log("Decrypted and imported AES key.");
-      log(`AES key imported: ${aesKey}`);
+      aesKey = new TextDecoder().decode(decrypted);
+      aesKey = CryptoJS.enc.Hex.parse(aesKey);
+
+      log(`Recieved AES key: ${aesKey}`);
+      console.log(typeof aesKey, aesKey.sigBytes, aesKey.words, aesKey.toString(CryptoJS.enc.Hex))
     });
 
-    socket.on("server_requests_aes_resend", async ({ target_sid }) => {
-      log(`Received server request to send AES key to ${target_sid}`);
-      if (aesKey && rsaPublicKeys[target_sid]) {
-        await sendAESToClient(target_sid);
-      } else {
-        log("Missing AES key or RSA public key for target.");
-      }
-    });
 
-    async function sendAESToClient(sid) {
-      const pubKey = rsaPublicKeys[sid];
-      const aesString = await exportAESKey(aesKey);
-      const encrypted = await encryptWithRSA(pubKey, new TextEncoder().encode(aesString));
-      socket.emit("send_aes_to_newcomer", { target_sid: sid, encrypted_aes: btoa(String.fromCharCode(...new Uint8Array(encrypted))) });
-      log(`Encrypted and sent AES key to ${sid}`);
-    }
 
     socket.on("receive_message", async ({ sender, message, iv }) => {
+      
       const decrypted = await decryptWithAES(aesKey, message, iv);
-      const plaintext = new TextDecoder().decode(decrypted);
+      const plaintext = decrypted;
       log(`Received message from ${sender}: ${plaintext}`);
       document.getElementById("messages").innerHTML += `<p><b>${sender}:</b> ${plaintext}</p>`;
     });
@@ -156,7 +197,8 @@
     async function sendMessage() {
       const input = document.getElementById("messageInput");
       const message = input.value;
-      const payload = await encryptWithAES(aesKey, new TextEncoder().encode(message));
+      const payload = await encryptWithAES(aesKey, message);
+
       socket.emit("send_message", { "payload": JSON.stringify(payload) });
       log(`Sent message: ${message}`);
       input.value = "";

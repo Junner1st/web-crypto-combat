@@ -61,6 +61,8 @@
     }
 
     async function encryptWithRSA(publicKey, data) {
+      // console.log(`data: ${data}`);
+      // console.log(typeof data, data.length, data.byteLength, data.buffer, data.buffer.byteLength);
       return crypto.subtle.encrypt({ name: "RSA-OAEP" }, publicKey, data);
     }
 
@@ -82,6 +84,14 @@
       const iv = Uint8Array.from(atob(payload.iv), c => c.charCodeAt(0));
       const data = Uint8Array.from(atob(payload.data), c => c.charCodeAt(0));
       return crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, data);
+    }
+
+    async function sendAESToClient(sid) {
+      const pubKey = rsaPublicKeys[sid];
+      const aesString = await exportAESKey(aesKey);
+      const encrypted = await encryptWithRSA(pubKey, new TextEncoder().encode(aesString));
+      socket.emit("send_aes_to_newcomer", { target_sid: sid, encrypted_aes: btoa(String.fromCharCode(...new Uint8Array(encrypted))) });
+      log(`Encrypted and sent AES key to ${sid}`);
     }
 
     socket.on("connect", async () => {
@@ -120,8 +130,12 @@
     });
 
     socket.on("receive_aes_key", async ({ encrypted_aes }) => {
+      console.log(`Received AES key from server: ${encrypted_aes}`);
+      console.log(typeof encrypted_aes, encrypted_aes.length, encrypted_aes.byteLength);
       log("Received encrypted AES key.");
       const decoded = Uint8Array.from(atob(encrypted_aes), c => c.charCodeAt(0));
+      console.log(`Decoded AES key: ${decoded}`);
+      console.log(typeof decoded, decoded.length, decoded.byteLength, decoded.buffer, decoded.buffer.byteLength);
       const decrypted = await decryptWithRSA(rsaKeyPair.privateKey, decoded);
       const aesStr = new TextDecoder().decode(decrypted);
       aesKey = await importAESKey(aesStr);
@@ -138,13 +152,6 @@
       }
     });
 
-    async function sendAESToClient(sid) {
-      const pubKey = rsaPublicKeys[sid];
-      const aesString = await exportAESKey(aesKey);
-      const encrypted = await encryptWithRSA(pubKey, new TextEncoder().encode(aesString));
-      socket.emit("send_aes_to_newcomer", { target_sid: sid, encrypted_aes: btoa(String.fromCharCode(...new Uint8Array(encrypted))) });
-      log(`Encrypted and sent AES key to ${sid}`);
-    }
 
     socket.on("receive_message", async ({ sender, message, iv }) => {
       const decrypted = await decryptWithAES(aesKey, message, iv);
