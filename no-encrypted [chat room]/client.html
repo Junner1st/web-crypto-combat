@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Secure Chat Client</title>
+  <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+  <h1>Secure Chat</h1>
+  <div id="messages"></div>
+  <input id="messageInput" placeholder="Type your message here" />
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    const socket = io("http://localhost:5055");
+    let clientId = null;
+    let rsaKeyPair = null;
+    let aesKey = null;
+    const rsaPublicKeys = {}; // { sid: rsaKey }
+
+    function log(msg) {
+      console.log(`[Log] ${msg}`);
+    }
+
+    socket.on("connect", async () => {
+      clientId = socket.id;
+      log(`Connected with id: ${clientId}`);
+    });
+
+    socket.on("connect_ack", async ({ user_list }) => {
+      log(`Received register_ack. User list: ${user_list.join(", ")}`);
+
+      if (user_list.length === 0) {
+        log("No users present.");
+      } else if (user_list.length !== 0) {
+        socket.emit("register");
+      } else {
+        log("condition sus ඞ");
+      }
+    });
+
+
+    socket.on("receive_message", async ({ sender, message }) => {
+      const plaintext = atob(message);
+      log(`Received message from ${sender}: ${plaintext}`);
+      document.getElementById("messages").innerHTML += `<p><b>${sender}:</b> ${plaintext}</p>`;
+    });
+
+    async function sendMessage() {
+      const input = document.getElementById("messageInput");
+      const message = input.value;
+      const payload = {
+        data: btoa(message),
+      }
+      socket.emit("send_message", { "payload": JSON.stringify(payload) });
+      log(`Sent message: ${message}`);
+      input.value = "";
+    }
+  </script>
+</body>
+</html>

@@ -71,7 +71,6 @@ def index():
 
 @socketio.on("connect")
 def handle_connect():
-    # print(f"Client connected: {request.sid}")
     logging.info(f"[connect] Client connected: {request.sid}")
     clients.append(request.sid)
 
@@ -82,8 +81,7 @@ def handle_connect():
 
 @socketio.on("disconnect")
 def handle_disconnect():
-    # print(f"Client disconnected: {request.sid}")
-    logging.info(f"Client disconnected: {request.sid}")
+    logging.info(f"[disconnect] Client disconnected: {request.sid}")
     if request.sid in clients:
         clients.remove(request.sid)
         logging.debug(f"Client {request.sid} removed from client list.")
@@ -93,28 +91,23 @@ def handle_disconnect():
 def handle_register(data):
     rsa_key = data.get("rsa_key")
 
-    # print(f"Client {request.sid} registered with RSA key.")
     logging.info(f"[register] Client {request.sid} registered with RSA key.")
 
     # Broadcast this client's RSA key to all others
-    # print(f"current clients: {clients}")
     logging.debug(f"Current clients: {clients}")
     for sid in clients:
         if sid != request.sid:
             emit("receive_rsa_key", {"sid": request.sid, "rsa_key": rsa_key}, to=sid)
             logging.info(f"[emit] Sending RSA key to {sid}")
-            # print(f"Sending RSA key to {sid}")
 
 @socketio.on("send_aes_to_newcomer")
 def handle_send_encrypted_aes(data):
     to_sid = data.get("target_sid")
     encrypted_aes = data.get("encrypted_aes")
     if to_sid in clients:
-        # print(f"Sending AES key to {to_sid}")
         emit("receive_aes_key", {"encrypted_aes": encrypted_aes}, to=to_sid)
         logging.info(f"[emit] Sending AES key to {to_sid}")
     else:
-        # print(f"Target client {to_sid} not found.")
         logging.warning(f"Target client {to_sid} not found.")
 
 @socketio.on("send_message")
@@ -132,11 +125,9 @@ def handle_send_message(data):
         logging.debug(f"Message: {message}")
         logging.debug(f"IV: {iv}")
     except (json.JSONDecodeError, KeyError) as e:
-        # print("Invalid payload:", e)
         logging.error("Invalid payload:", e)
         return
     
-    # print(f"Received message: {message} from {request.sid}")
     emit("receive_message", {"sender": request.sid, "message": message, "iv": iv}, broadcast=True)
     logging.info(f"[emit] Broadcasting the message from {request.sid}")
 
