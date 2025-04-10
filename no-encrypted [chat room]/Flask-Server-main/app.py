@@ -39,7 +39,7 @@ def handle_disconnect():
         # emit("user_left", {"sid": request.sid}, broadcast=True)
 
 @socketio.on("register")
-def handle_register(data):
+def handle_register():
     logging.info(f"[register] Client {request.sid} registered.")
 
 
