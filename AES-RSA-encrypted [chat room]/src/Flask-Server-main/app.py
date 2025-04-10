@@ -59,66 +59,86 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 clients = []
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    datefmt="%H:%M:%S"
+)
+
+@app.route("/")
+def index():
+    return "Server is running."
+
 @socketio.on("connect")
 def handle_connect():
-    print(f"Client connected: {request.sid}")
+    # print(f"Client connected: {request.sid}")
+    logging.info(f"[connect] Client connected: {request.sid}")
     clients.append(request.sid)
 
     user_list = [sid for sid in clients if sid != request.sid]
     emit("connect_ack", {"user_list": user_list})
-    # print(f"Connected clients: {user_list}")
+    logging.info(f"[emit] Sending user list to {request.sid}")
+    logging.debug(f"User list: {user_list}")
 
 @socketio.on("disconnect")
 def handle_disconnect():
-    print(f"Client disconnected: {request.sid}")
+    # print(f"Client disconnected: {request.sid}")
+    logging.info(f"Client disconnected: {request.sid}")
     if request.sid in clients:
         clients.remove(request.sid)
-        emit("user_left", {"sid": request.sid}, broadcast=True)
+        logging.debug(f"Client {request.sid} removed from client list.")
+        # emit("user_left", {"sid": request.sid}, broadcast=True)
 
 @socketio.on("register")
 def handle_register(data):
     rsa_key = data.get("rsa_key")
 
-    print(f"Client {request.sid} registered with RSA key.")
-
+    # print(f"Client {request.sid} registered with RSA key.")
+    logging.info(f"[register] Client {request.sid} registered with RSA key.")
 
     # Broadcast this client's RSA key to all others
-    print(f"current clients: {clients}")
+    # print(f"current clients: {clients}")
+    logging.debug(f"Current clients: {clients}")
     for sid in clients:
         if sid != request.sid:
-            print(f"Sending RSA key to {sid}")
             emit("receive_rsa_key", {"sid": request.sid, "rsa_key": rsa_key}, to=sid)
+            logging.info(f"[emit] Sending RSA key to {sid}")
+            # print(f"Sending RSA key to {sid}")
 
 @socketio.on("send_aes_to_newcomer")
 def handle_send_encrypted_aes(data):
     to_sid = data.get("target_sid")
     encrypted_aes = data.get("encrypted_aes")
     if to_sid in clients:
-        print(f"Sending AES key to {to_sid}")
+        # print(f"Sending AES key to {to_sid}")
         emit("receive_aes_key", {"encrypted_aes": encrypted_aes}, to=to_sid)
+        logging.info(f"[emit] Sending AES key to {to_sid}")
     else:
-        print(f"Target client {to_sid} not found.")
+        # print(f"Target client {to_sid} not found.")
+        logging.warning(f"Target client {to_sid} not found.")
 
 @socketio.on("send_message")
 def handle_send_message(data):
     payload = data.get("payload")
-    print(f"Received payload: {payload}")
+    logging.debug(f"Received payload: {payload}")
     if payload is None:
-        print("Invalid payload: payload is None")
+        print("[Invalid payload] payload is None")
+        logging.warning("[Invalid payload] payload is None")
         return
     try:
         payload_dict = json.loads(payload)
         message = payload_dict["data"]
         iv = payload_dict["iv"]
-        print(f"Message: {message}")
-        print(f"IV: {iv}")
+        logging.debug(f"Message: {message}")
+        logging.debug(f"IV: {iv}")
     except (json.JSONDecodeError, KeyError) as e:
-        print("Invalid payload:", e)
+        # print("Invalid payload:", e)
+        logging.error("Invalid payload:", e)
         return
     
-
-    print(f"Received message: {message} from {request.sid}")
+    # print(f"Received message: {message} from {request.sid}")
     emit("receive_message", {"sender": request.sid, "message": message, "iv": iv}, broadcast=True)
+    logging.info(f"[emit] Broadcasting the message from {request.sid}")
 
 
 if __name__ == "__main__":
