@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>即時聊天室</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5563DE;
+            --primary-hover: #3D4FBF;
+            --secondary-bg: #f0f2f5;
+            --system-bg: #e9ecef;
+            --self-bg: var(--primary-color);
+            --other-bg: #f1f0f0;
+            --self-text: #fff;
+            --other-text: #000;
+            --system-text: #6c757d;
+            --message-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            background: var(--secondary-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* 導覽列樣式 */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+            padding: 0.75rem 1rem;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand svg {
+            margin-right: 8px;
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+        }
+
+        .navbar-text {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        /* 聊天室容器 */
+        #chat {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: var(--message-shadow);
+            padding: 20px;
+            height: 70vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        /* 自訂捲軸 */
+        #chat::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #chat::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+        }
+
+        #chat::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+        }
+
+        /* 訊息氣泡及動畫 */
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-end;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: messageIn 0.3s ease forwards;
+        }
+
+        @keyframes messageIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message .bubble {
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 70%;
+            box-shadow: var(--message-shadow);
+            word-break: break-word;
+        }
+
+        /* 系統訊息 */
+        .message.system {
+            justify-content: center;
+        }
+
+        .message.system .bubble {
+            background: var(--system-bg);
+            color: var(--system-text);
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+
+        /* 自己的訊息 */
+        .message.self {
+            justify-content: flex-end;
+        }
+
+        .message.self .bubble {
+            background: var(--self-bg);
+            color: var(--self-text);
+            border-bottom-right-radius: 0;
+        }
+
+        /* 其他用戶的訊息 */
+        .message.other {
+            justify-content: flex-start;
+        }
+
+        .message.other .bubble {
+            background: var(--other-bg);
+            color: var(--other-text);
+            border-bottom-left-radius: 0;
+        }
+
+        /* 輸入區與按鈕樣式 */
+        #message_input {
+            height: 45px;
+            border-radius: 25px;
+            padding-left: 15px;
+            border: 1px solid #ced4da;
+            transition: border 0.2s ease;
+        }
+
+        #message_input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(85, 99, 222, 0.15);
+            outline: none;
+        }
+
+        .input-group .btn {
+            border-radius: 25px;
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0 20px;
+            transition: background-color 0.2s;
+        }
+
+        .input-group .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* 時間戳樣式 */
+        .timestamp {
+            font-size: 0.75rem;
+            color: #6c757d;
+            margin-top: 4px;
+            display: block;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 導覽列，可依需求加入 SVG 圖示 -->
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 12H7v-2h10v2zm0-3H7V9h10v2zm0-3H7V6h10v2z" />
+            </svg>
+            即時聊天室
+        </a>
+        <span class="navbar-text ms-auto">用戶: {{ username }}</span>
+    </nav>
+
+    <div class="container mt-4">
+        <div id="chat" class="mb-3"></div>
+        <div class="input-group mb-3">
+            <input id="message_input" type="text" class="form-control" placeholder="輸入訊息...">
+            <button id="send" class="btn btn-primary">送出</button>
+        </div>
+    </div>
+
+    <!-- 載入 Socket.IO 與 jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var socket = io();
+        var currentUser = "{{ username }}";
+
+        $(document).ready(function () {
+            // 進入聊天室時發送 "join" 事件
+            socket.emit('join', {});
+
+            // 點擊送出按鈕發送訊息
+            $('#send').on('click', function () {
+                var msg = $('#message_input').val();
+                if (msg.trim().length > 0) {
+                    socket.emit('text', { 'msg': msg });
+                    $('#message_input').val('');
+                }
+            });
+
+            // Enter 鍵送出訊息
+            $('#message_input').on('keypress', function (e) {
+                if (e.which == 13) {
+                    $('#send').click();
+                }
+            });
+
+            // 接收一般訊息，並加入時間戳
+            socket.on('message', function (data) {
+                let isCurrentUser = data.msg.startsWith(currentUser + ":");
+                let isSystem = data.msg.indexOf("已進入聊天室") !== -1 || data.msg.indexOf("已離開聊天室") !== -1;
+                let messageClasses = isSystem ? "system" : (isCurrentUser ? "self" : "other");
+                let timeStamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                let messageDiv = $(`
+          <div class="message ${messageClasses}">
+              <div class="bubble">${data.msg}</div>
+              <small class="timestamp">${timeStamp}</small>
+          </div>
+        `);
+                $('#chat').append(messageDiv);
+                $('#chat').scrollTop($('#chat')[0].scrollHeight);
+            });
+
+            // 接收狀態更新訊息（例如使用者進入/離開聊天室）
+            socket.on('status', function (data) {
+                let timeStamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                let messageDiv = $(`
+          <div class="message system">
+              <div class="bubble">${data.msg}</div>
+              <small class="timestamp">${timeStamp}</small>
+          </div>
+        `);
+                $('#chat').append(messageDiv);
+                $('#chat').scrollTop($('#chat')[0].scrollHeight);
+            });
+        });
+    </script>
+</body>
+
+</html>
