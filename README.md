@@ -2,10 +2,15 @@
 
 ## 使用教學
 
+推薦版本 python 3.13
+
 在 command line 輸入以下命令
 ```bash
 python -m venv .venv
-source .venv/bin/activate
+
+source .venv/bin/activate # Linux
+.\.venv\Scripts\activate  # Windows
+
 pip install -r requirements.txt
 cd homO_chAT
 python app.py
