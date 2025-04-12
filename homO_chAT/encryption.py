@@ -1,6 +1,5 @@
 # encryption.py
 import abc
-from typing import Tuple
 from random import randint
 
 class BaseEncryption(abc.ABC):

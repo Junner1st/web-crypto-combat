@@ -1,7 +1,6 @@
 # app.py
-from flask import Flask, render_template, session, request, redirect, url_for
+from flask import Flask, render_template, session, request
 from flask_socketio import SocketIO, emit, join_room, leave_room
-import time
 
 # 引入加密模組，可輕易替換不同實作
 from encryption import DummyEncryption, CaesarEncryption
@@ -111,8 +110,7 @@ def handle_chat_message(data):
     username = session.get('username', 'unknown_user')
     msg = data.get('msg', '')
 
-    # 修正檢查邏輯，避免 KeyError
-    if username not in enc_objects:
+    if len(enc_objects) != 2:
         emit('status', {'msg': '尚未完成金鑰交換，請先生成金鑰'}, room=request.sid)
         return
     
