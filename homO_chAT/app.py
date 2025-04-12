@@ -69,8 +69,8 @@ def handle_key_exchange(data):
         private_key_info = enc_objects[username].get_private_key_info()
 
         # 告知用戶端產生金鑰資訊
-        emit('status', {'msg': f'{username} 產生 public_key: {public_key_info}, private_key: {private_key_info}'}, room=request.sid)
-        emit('monitor_info', {'msg': f'[KEY_EXCHANGE] {username} 產生 public_key: {public_key_info}, private_key: {private_key_info}'}, room=MONITOR_ROOM)
+        emit('status', {'msg': f'{username} 產生 public_key: {public_key_info}'}, room=request.sid)
+        emit('status', {'msg': f'{username} 產生 private_key: {private_key_info}'}, room=request.sid)
 
         # 向聊天室和監控室送出發佈公鑰消息
         emit('status', {'msg': f'{username} 發出公鑰: {public_key_info}'}, room=CHAT_ROOM)
