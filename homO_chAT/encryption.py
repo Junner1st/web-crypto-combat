@@ -1,4 +1,3 @@
-# encryption.py
 import abc
 from random import randint
 
@@ -69,25 +68,25 @@ class CaesarEncryption(BaseEncryption):
     def encrypt(self, plaintext: bytes) -> bytes:
         key = int.from_bytes(self.peer_key, byteorder="big")
         cipher = bytearray()
-        for b in plaintext.decode():
-            if b.islower():
-                cipher.append((ord(b) - ord('a') + key) % 26 + ord('a'))
-            elif b.isupper():
-                cipher.append((ord(b) - ord('A') + key) % 26 + ord('A'))
+        for b in plaintext:
+            if 97 <= b <= 122:  # ord('a') = 97; ord('z') = 122
+                cipher.append((b - 97 + key) % 26 + 97)
+            elif 65 <= b <= 90:  # ord('A') = 65; ord('Z') = 90
+                cipher.append((b - 65 + key) % 26 + 65)
             else:
-                cipher.append(ord(b))
+                cipher.append(b)
         return bytes(cipher)
     
     def decrypt(self, ciphertext: bytes) -> bytes:
         key = int.from_bytes(self.private_key, byteorder="big")
         plain = bytearray()
-        for b in ciphertext.decode():
-            if b.islower():
-                plain.append((ord(b) - ord('a') - key) % 26 + ord('a'))
-            elif b.isupper():
-                plain.append((ord(b) - ord('A') - key) % 26 + ord('A'))
+        for b in ciphertext:
+            if 97 <= b <= 122:  # ord('a') = 97; ord('z') = 122
+                plain.append((b - 97 - key) % 26 + 97)
+            elif 65 <= b <= 90:  # ord('A') = 65; ord('Z') = 90
+                plain.append((b - 65 - key) % 26 + 65)
             else:
-                plain.append(ord(b))
+                plain.append(b)
         return bytes(plain)
 
 # 使用哪個加密演算法可以在程式碼中輕易替換
@@ -97,6 +96,7 @@ if __name__ == '__main__':
     algo = CaesarEncryption()
     algo.generate_keys()
     plaintext = b"Hello, World!"
+    algo.exchange_keys(algo.public_key)
     ciphertext = algo.encrypt(plaintext)
     decrypted = algo.decrypt(ciphertext)
     print("Key:", algo.get_public_key_info())
