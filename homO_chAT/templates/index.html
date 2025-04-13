@@ -371,7 +371,7 @@
             <p class="text-center mb-4" style="color: #ff3366">
                 ⚠️ 注意：只能選兩個人！<tiny> 還是你想多一人？(小聲 </tiny>
             </p>
-            <form action="/chat" method="get">
+            <form action="/chat" method="get" target="_blank">
                 <div class="mb-3">
                     <label for="username" class="form-label" style="color: #ff3366">
                         用戶名稱（一個一個一個...）
@@ -382,10 +382,25 @@
                     </select>
                 </div>
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
                         <span style="vertical-align: middle">立刻登入！</span>
                         <span style="font-size:0.8em">(っ◕‿◕)っ</span>
                     </button>
+                </div>
+
+                <!-- 新增的監控按鈕在這裡 -->
+                <div class="d-grid mt-3">
+                    <a href="/monitor" class="btn btn-secondary" 
+                    target="_blank"
+                    style="background: #cc99ff; 
+                            border: 2px dashed #ff99cc;
+                            position: relative;
+                            overflow: hidden;">
+                        <span style="font-size:0.9em">👁️</span> 
+                        監控室秘密通道
+                        <span class="float-element" style="right:-10px; animation-delay:0.2s">🕶️</span>
+                        <div class="pixel-border" style="width:100%;height:2px;bottom:0"></div>
+                    </a>
                 </div>
             </form>
         </div>
@@ -561,6 +576,33 @@
                 spawnYasen(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
             }, 5000);
         };
+
+        // 在原有 script 加入分頁開啟特效
+        document.querySelectorAll('a[target="_blank"]').forEach(link => {
+            link.addEventListener('click', function() {
+                this.style.transform = 'rotate(360deg) scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 500);
+            });
+        });
+
+        document.getElementById('submitBtn').addEventListener('click', function(e) {
+            // 觸發動畫特效
+            this.style.transform = 'rotate(720deg) scale(1.5)';
+            this.style.filter = 'hue-rotate(180deg)';
+            
+            // 延遲重置樣式
+            setTimeout(() => {
+                this.style.transform = '';
+                this.style.filter = '';
+            }, 1000);
+
+            // 同步觸發神經元特效
+            if(Math.random() < 0.5) {
+                triggerNeuro();
+            }
+        });
     </script>
 </body>
 
