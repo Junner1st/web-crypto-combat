@@ -153,8 +153,7 @@
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="#">
             <svg viewBox="0 0 24 24">
-                <path
-                    d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 12H7v-2h10v2zm0-3H7V9h10v2zm0-3H7V6h10v2z" />
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 12H7v-2h10v2zm0-3H7V9h10v2zm0-3H7V6h10v2z" />
             </svg>
             即時聊天室
         </a>
@@ -181,12 +180,17 @@
         /* -------------------- Socket 連線 -------------------- */
         socket.emit('join_chat', {});
 
+        let hasKeyExchange = false;
+
         socket.on('status', data => {
             addSystemMessage(data.msg);
-            // 金鑰交換完成後啟用輸入
+            if (hasKeyExchange) return;
+            // 當金鑰交換完成後啟用輸入，並封鎖金鑰交換功能
             if (data.msg.indexOf("金鑰交換完成") !== -1) {
                 document.getElementById("inputMessage").disabled = false;
                 document.getElementById("sendBtn").disabled = false;
+                document.getElementById("keyBtn").disabled = true; // 封鎖金鑰交換按鈕
+                hasKeyExchange = true;
             }
         });
 
