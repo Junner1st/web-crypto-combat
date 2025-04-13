@@ -89,6 +89,8 @@ class CaesarEncryption(BaseEncryption):
                 plain.append(b)
         return bytes(plain)
 
+encrypt_algo = CaesarEncryption
+
 # 使用哪個加密演算法可以在程式碼中輕易替換
 # 預設可以用 DummyEncryption 或 CaesarEncryption 進行測試。
 if __name__ == '__main__':

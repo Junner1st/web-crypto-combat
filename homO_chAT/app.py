@@ -1,10 +1,9 @@
-# app.py
 from flask import Flask, render_template, session, request
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from threading import Lock
 
 # 引入加密模組，可輕易替換不同實作
-from encryption import DummyEncryption, CaesarEncryption
+from encryption import encrypt_algo
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
@@ -14,9 +13,9 @@ socketio = SocketIO(app)
 CHAT_ROOM = "chat_room"
 MONITOR_ROOM = "monitor_room"
 
-# 初始化加密演算法實例（這裡以 CaesarEncryption 為範例）
-encrypt_algo = CaesarEncryption
 enc_objects = {}
+# 全局鎖，用於同步操作 enc_objects
+enc_lock = Lock()
 
 @app.route('/')
 def index():
@@ -46,8 +45,6 @@ def handle_join_chat(data):
 def handle_join_monitor(data):
     join_room(MONITOR_ROOM)
     emit('monitor_info', {'msg': '監控端已連線'}, room=MONITOR_ROOM)
-
-enc_lock = Lock()
 
 @socketio.on('start_key_exchange')
 def handle_key_exchange(data):
@@ -105,33 +102,30 @@ def handle_key_exchange(data):
 
 @socketio.on('chat_message')
 def handle_chat_message(data):
-    """
-    用戶端送出訊息時：
-      - 檢查是否已完成金鑰交換，若未完成則拒絕
-      - 將明文訊息轉為 bytes，再進行加密和解密
-      - 將解密後的內容送出給聊天室，同時將加密密文（以 hex 表示）送往監控端
-    """
     username = session.get('username', 'unknown_user')
     msg = data.get('msg', '')
-
-    if len(enc_objects) != 2:
-        emit('status', {'msg': '尚未完成金鑰交換，請先生成金鑰'}, room=request.sid)
-        return
     
-    other_user = [user for user in enc_objects if user != username][0]
-
-    plaintext = msg.encode('utf-8')
-    ciphertext = enc_objects[username].encrypt(plaintext)
-    recovered_text = enc_objects[other_user].decrypt(ciphertext).decode('utf-8')
+    with enc_lock:
+        if len(enc_objects) < 2:
+            emit('status', {'msg': '尚未完成金鑰交換，請先生成金鑰'}, room=request.sid)
+            return
+        
+        other_user = [user for user in enc_objects if user != username][0]
+    
+        plaintext = msg.encode('utf-8')
+        ciphertext = enc_objects[username].encrypt(plaintext)
+        recovered_text = enc_objects[other_user].decrypt(ciphertext).decode('utf-8')
+        
     emit('message', {'msg': f'{username}: {recovered_text}'}, room=CHAT_ROOM)
     emit('monitor_info', {'msg': f'{username} (encrypted): {ciphertext.hex()}'}, room=MONITOR_ROOM)
 
 @socketio.on('disconnect')
 def handle_disconnect():
     username = session.get('username', 'unknown_user')
+    with enc_lock:
+        enc_objects.pop(username, None)
     leave_room(CHAT_ROOM)
     leave_room(MONITOR_ROOM)
-    enc_objects.pop(username, None)
     emit('status', {'msg': f'{username} 離開聊天室'}, room=CHAT_ROOM)
     emit('monitor_info', {'msg': f'{username} 離開系統'}, room=MONITOR_ROOM)
 
