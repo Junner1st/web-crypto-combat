@@ -1,13 +1,13 @@
-<!-- templates/monitor.html -->
 <!DOCTYPE html>
 <html lang="zh-TW">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>安全監控儀表板</title>
+    <title>監控室</title>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.min.js"></script>
     <style>
+        /* 基本樣式 */
         * {
             margin: 0;
             padding: 0;
@@ -26,7 +26,7 @@
             margin: 0 auto;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
             overflow: hidden;
         }
 
@@ -59,7 +59,7 @@
             padding: 1rem;
             margin-bottom: 0.8rem;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             font-family: 'Consolas', 'Courier New', monospace;
             color: #495057;
             display: flex;
@@ -116,6 +116,59 @@
                 padding: 1rem;
             }
         }
+
+        /* 新增 hex 功能相關樣式 */
+        .hex-container {
+            display: inline-flex;
+            align-items: center;
+            background: #fff5f5;
+            border-radius: 4px;
+            padding: 2px 6px;
+            margin: 0 2px;
+            border: 1px solid #ffe3e3;
+            transition: background 0.2s;
+        }
+
+        .hex-value {
+            font-family: 'Consolas', monospace;
+            color: #c92a2a;
+            margin: 0 8px;
+        }
+
+        .btn-copy,
+        .btn-convert {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 2px 4px;
+            font-size: 0.8em;
+            color: #868e96;
+            transition: all 0.2s;
+        }
+
+        .btn-copy:hover {
+            color: #2b8a3e;
+        }
+
+        .btn-convert:hover {
+            color: #1864ab;
+        }
+
+        .btn-copy::after {
+            content: "✂";
+            font-size: 1.5em;
+        }
+
+        .btn-convert::after {
+            content: "⇄";
+            font-size: 1.5em;
+        }
+
+        .timestamp {
+            color: #6c757d;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 
@@ -126,21 +179,67 @@
     </div>
 
     <script>
+        // 初始化 Socket.IO 並加入監控房間
         var socket = io();
         socket.emit('join_monitor', {});
 
+        // 取得監控區塊元素
         const monitor = document.getElementById("monitor");
+
+        // 定義 hex 解析函數，用於解析最後的 hex 字串並加入互動按鈕
+        const hexParse = (msg) => {
+            return msg.replace(/: (\s*)([0-9a-fA-F]+)(\s*)$/,
+                (match, p1, p2, p3) => {
+                    return `: ${p1}<span class="hex-container" data-original="${p2}">
+                        <span class="hex-value">${p2}</span>
+                        <button class="btn-copy" onclick="copyHex(this)"></button>
+                        <button class="btn-convert" onclick="convertHex(this)"></button>
+                    </span>${p3}`;
+                });
+        };
+
+        // 複製功能：將 hex 值複製到剪貼簿
+        function copyHex(btn) {
+            const hex = btn.parentElement.querySelector('.hex-value').textContent;
+            navigator.clipboard.writeText(hex);
+        }
+
+        // 格式轉換功能：在 hex 與十進制之間切換顯示
+        function convertHex(btn) {
+            const container = btn.parentElement;
+            const original = container.dataset.original;
+            const displayElem = container.querySelector('.hex-value');
         
-        socket.on('monitor_info', function (data) {
+            if (container.dataset.converted === 'true') {
+                displayElem.textContent = original;
+                container.dataset.converted = 'false';
+            } else {
+                try {
+                    // 使用 BigInt 處理超大數值，轉換時必須加入 "0x" 前綴
+                    const bigValue = BigInt("0x" + original);
+                    // 轉換為十進制字串
+                    displayElem.textContent = bigValue.toString(10);
+                } catch (e) {
+                    // 若出現錯誤就退回至 parseInt (適用於較小數值)
+                    const num = parseInt(original, 16);
+                    displayElem.textContent = num.toString();
+                }
+                container.dataset.converted = 'true';
+            }
+        }
+
+        // 監控 socket 傳來的資訊，並整合 hex 解析功能
+        socket.on('monitor_info', function(data) {
             const entry = document.createElement('p');
+            const processedMsg = hexParse(data.msg);
             entry.innerHTML = `
-                <span style="color: #6c757d; margin-right: 15px;">${new Date().toLocaleTimeString()}</span>
-                ${data.msg}
+                <span class="timestamp">${new Date().toLocaleTimeString()}</span>
+                ${processedMsg}
             `;
-            
+
             monitor.appendChild(entry);
-            
-            // 自动滚动到底部
+
+            // 自動滾動到底部
             monitor.scrollTo({
                 top: monitor.scrollHeight,
                 behavior: 'smooth'
