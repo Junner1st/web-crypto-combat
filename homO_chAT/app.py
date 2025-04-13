@@ -6,7 +6,7 @@ from threading import Lock
 from encryption import encrypt_algo
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-secret-key'
+app.config['SECRET_KEY'] = '1145141919810'
 socketio = SocketIO(app)
 
 # 定義聊天室與監控室名稱
