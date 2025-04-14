@@ -444,8 +444,9 @@
         }
 
         // 下拉選單彩蛋：選擇 'Bob' 時播放音效並改變整個螢幕背景為 #ffd700
-        usernameSelect.addEventListener('change', function () {
-            if (this.value === 'Bob') {
+        document.getElementById('submitBtn').addEventListener('click', function () {
+            const selectedValue = usernameSelect.value;
+            if (selectedValue === 'Bob') {
                 homoSound.play();
                 document.body.style.backgroundColor = '#ffd700';
                 setTimeout(() => {
