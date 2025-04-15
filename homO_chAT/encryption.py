@@ -41,7 +41,7 @@ class BaseEncryption(abc.ABC):
 
 class DummyEncryption(BaseEncryption):
     """
-    測試用的演算法，所有操作均為單位操作，不做任何改變
+    測試用的演算法，所有操作均為單位操作，不對明文做任何改變
     """
     def generate_keys(self) -> None:
         return
@@ -57,6 +57,12 @@ class DummyEncryption(BaseEncryption):
 
 
 class CaesarEncryption(BaseEncryption):
+    """
+    把英文字母往後「固定向後移動幾格」的加密方法
+    如要加密 "Apple"，key 是 1
+    加密後變 "Bqqmf"
+    解密只要每個字「倒退 key 格」即可
+    """
     def generate_keys(self) -> None:
         self.public_key = bytes([randint(0, 25)])
         self.private_key = self.public_key
