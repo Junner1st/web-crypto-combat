@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# sage
+*.sage.py
+
 # C extensions
 *.so
 
