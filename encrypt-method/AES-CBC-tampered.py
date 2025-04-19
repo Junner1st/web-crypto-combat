@@ -36,10 +36,10 @@ class AES_CBC_Encryption(BaseEncryption):
         key, iv = self.peer_key[:16], self.peer_key[16:]
         mac_tag = BLAKE2s.new(digest_bits=(8*self._mac_tag_size), key=key,
                                    data=plaintext).digest()
-        # middle_man_message = b""
+        middle_man_message = b""
 
         ### 假設被中間人篡改消息
-        middle_man_message = "現在正是復權的時刻".encode('utf-8')
+        # middle_man_message = "現在正是復權的時刻".encode('utf-8')
 
         plaintext = plaintext + middle_man_message
         cipher = AES.new(key, AES.MODE_CBC, iv)
