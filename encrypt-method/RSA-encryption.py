@@ -45,7 +45,4 @@ class RSAEncryption(BaseEncryption):
             raise ValueError("Ciphertext too long")
         return long_to_bytes(plaintext_int)
 
-
-
-
 encrypt_algo = RSAEncryption
