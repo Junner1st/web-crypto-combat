@@ -12,9 +12,9 @@ class AES_CBC_Encryption(BaseEncryption):
     def verify(self, received_mac_tag) -> bool:
         secret = get_random_bytes(16)
 
-        mac1 = BLAKE2s.new(digest_bits=160, key=secret,
+        mac1 = BLAKE2s.new(digest_bits=(8*self._mac_tag_size), key=secret,
                            data=self._mac_tag)
-        mac2 = BLAKE2s.new(digest_bits=160, key=secret,
+        mac2 = BLAKE2s.new(digest_bits=(8*self._mac_tag_size), key=secret,
                            data=received_mac_tag)
 
         if mac1.digest() != mac2.digest():
